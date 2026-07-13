@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2026-07-14T08:36:34+09:00",
+  "id": "emoji-stamp-with-gemini",
+  "duration": 115,
+  "title": "Android Studio と Gemini で加速する、次世代の Android アプリ開発",
+  "authors": "Yuki Anzai",
+  "summary": "Gemini in Android Studio の Agent モードを使いこなし、写真に絵文字スタンプを押せるアプリを実装します。Rules 設定、コンテキスト管理、制約付きプロンプト、差分レビューなど、Agent を実務で使うための技術を体験する中級者向けハンズオンです。",
+  "source": "emoji-stamp-with-gemini.md",
+  "theme": "",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "android",
+    "ai"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://github.com/yanzm/ai-dojo-20260719/issues",
+  "url": "emoji-stamp-with-gemini"
+}

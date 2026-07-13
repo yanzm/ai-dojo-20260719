@@ -1,0 +1,287 @@
+summary: Gemini in Android Studio の Agent モードを使いこなし、写真に絵文字スタンプを押せるアプリを実装します。Rules 設定、コンテキスト管理、制約付きプロンプト、差分レビューなど、Agent を実務で使うための技術を体験する中級者向けハンズオンです。
+id: emoji-stamp-with-gemini
+categories: Android, AI
+environments: Web
+status: Draft
+feedback link: https://github.com/yanzm/ai-dojo-20260719/issues
+authors: Yuki Anzai
+
+# Android Studio と Gemini で加速する、次世代の Android アプリ開発
+
+## はじめに
+Duration: 5
+
+このハンズオンへようこそ！
+
+この Codelab では、**Gemini in Android Studio の Agent モード**を使って Android アプリを実装します。単に「AI にコードを書かせる」のではなく、**Rules・コンテキスト・制約付きプロンプト・差分レビュー**といった、Agent を実務の開発で使いこなすための技術を体験するのがゴールです。
+
+### 前提条件
+
+* Android アプリ開発の基礎経験（Kotlin / Jetpack Compose の基本がわかる）
+* Intent、Gradle、AndroidManifest の基本的な理解
+
+### 作るもの
+
+ギャラリーから選んだ写真、またはカメラ Intent で撮った写真の上に、絵文字スタンプをペタペタ貼れるアプリです。小さな題材ですが、Photo Picker / カメラ Intent + FileProvider / ジェスチャ処理 / 状態管理と論点が揃っていて、**Agent への指示の良し悪しが結果に直結します**。
+
+![TODO: 完成アプリのスクリーンショット（写真の上に絵文字スタンプが3〜4個載ったエミュレータ画面。最初に見せる「ゴール」なので一番映える写真で）](img/01-finished-app.png)
+
+### 学べること
+
+* Agent モードの仕組み（Chat との違い、コンテキストの渡り方）
+* **Rules** で Agent の振る舞いをプロジェクトに合わせてカスタマイズする方法
+* **制約付きプロンプト**で実装方式・アーキテクチャを制御する技術
+* Agent が生成した**差分をレビューする観点**（過剰な変更・不要な依存・権限の混入）
+* エラー修正・リファクタリングまで含めた、AI とペアで開発するワークフロー
+
+### 事前準備（必須）
+
+> aside negative
+> 当日は環境構築の時間を取りません。以下を**事前に**済ませておいてください。
+>
+> * 最新版の Android Studio をインストール
+> * エミュレータ（API レベルは最新推奨）を作成、または実機を準備
+> * Android Studio で Google アカウントにサインインし、Gemini を有効化
+> * 「Empty Activity」テンプレートで `EmojiStamp` という新規プロジェクトを作成し、一度ビルド・実行できることを確認
+
+> aside positive
+> Android Studio と Gemini の UI は更新頻度が高いため、この Codelab のスクリーンショットと実際の画面が多少異なる場合があります。適宜読み替えてください。
+
+## 環境を確認する
+Duration: 10
+
+ハンズオン本編に入る前に、環境をチェックリストで確認します。
+
+### チェックリスト
+
+1. `EmojiStamp` プロジェクトを Android Studio で開く（未作成なら「Empty Activity」テンプレートで作成。Name: `EmojiStamp`、他はデフォルトで OK）
+2. ▶ Run でエミュレータ（または実機）に「Hello Android」が表示される
+3. Gemini パネル（右端のアイコン）が開き、サインイン済みである
+
+![TODO: Gemini パネルを開いた状態の Android Studio。右端のアイコンの場所を赤枠で示す](img/08-gemini-panel.png)
+
+### バージョン管理を有効にする
+
+Agent は複数ファイルを一気に書き換えます。**変更を差分で追い、いつでも戻せる状態**にしておくのが Agent 活用の大前提です。
+
+1. メニューから VCS を有効化（`VCS > Enable Version Control Integration...` → Git）
+2. 初期状態をコミットしておきます
+
+> aside positive
+> 以降、各ステップが動いたらこまめにコミットしましょう。「Agent が変な方向に書き換えた」ときに、直前の動く状態へ即座に戻れます。これは実務でも同じです。
+
+## Agent モードを理解する
+Duration: 15
+
+### Chat と Agent の違い
+
+| モード | できること |
+| --- | --- |
+| **Chat** | 質問応答・コード説明・レビュー。ファイルは書き換えない |
+| **Agent** | 指示に従って**複数ファイルを編集**し、ビルド・エラー修正まで自律的に進める |
+
+Gemini パネル上部でモードを **Agent** に切り替えます。
+
+![TODO: Gemini パネルのモード切替 UI。「Agent」を選択した状態を赤枠で示す](img/09-agent-mode-switch.png)
+
+### コンテキストを意識する
+
+Agent の出力品質は「何を知っているか」で決まります。
+
+* プロジェクト構造やファイルは Agent が自動で参照しますが、**関係するファイルを明示**（`@ファイル名` で添付）すると精度が上がります
+* 「このファイルの `XxxScreen` を〜」のように、対象を具体的に指すのも有効です
+
+### Rules を設定する
+
+**Rules** は、すべての指示に自動で適用される「プロジェクトの掟」です。チームのコーディング規約を Agent に守らせる仕組みだと考えてください。
+
+Gemini の設定（Settings 内の Gemini > Rules。バージョンによってはプロジェクト直下の `AGENTS.md`）に、次のようなルールを登録してみましょう。
+
+```
+- 言語は Kotlin、UI は Jetpack Compose + Material3 を使う
+- 依存関係の追加は最小限にし、追加する場合は理由を説明する
+- deprecated な API は使わない
+- 変更は依頼された範囲に留め、無関係なリファクタリングをしない
+- 説明は日本語で行う
+```
+
+![TODO: Rules の設定画面。上記のルールを入力した状態](img/15-rules-settings.png)
+
+> aside positive
+> 実務では「アーキテクチャ（例：UI は stateless composable + 状態ホイスティング）」「テスト方針」「命名規則」などをルール化しておくと、Agent の出力がチームのコードベースに馴染みます。ルール整備は一度やれば効き続ける投資です。
+
+### 差分レビューの観点
+
+Agent は変更を差分で提案し、あなたが **Accept / Reject** を判断します。中級者のあなたはコードが読めるので、**PR レビューと同じ目**で見てください。特に注意すべきは：
+
+* 頼んでいないファイルまで書き換えていないか
+* 不要な依存関係が `build.gradle.kts` に追加されていないか
+* **不要な権限が `AndroidManifest.xml` に追加されていないか**（後のステップで実例が出ます）
+* 動くけど古い書き方（deprecated API、非推奨パターン）になっていないか
+
+![TODO: Agent が差分を提案して Accept / Reject ボタンが表示されている画面（このハンズオンで一番よく見る画面）](img/10-agent-diff-accept.png)
+
+## 写真を取得する（Photo Picker とカメラ Intent）
+Duration: 30
+
+最初の機能実装です。ここでの主題は「**制約付きプロンプト**で実装方式を制御する」ことです。
+
+> aside positive
+> 「写真を選べるようにして」というゆるい指示でも動くものは出ます。しかし実装方式（Photo Picker か `ACTION_GET_CONTENT` か）、ライブラリ選定、状態の持ち方が毎回変わり、レビューも難しくなります。**設計判断は人間が持ち、実装を Agent に任せる**のが基本姿勢です。
+
+### ステップ1：Photo Picker（制約付きプロンプト）
+
+Agent に次のように指示します。「制約:」以下がポイントです。
+
+```
+写真を1枚選んで画面に表示する機能を実装してください。
+
+制約:
+- Photo Picker（PickVisualMedia の ActivityResultContract）を使うこと
+- 選択した画像は Uri のまま状態として保持すること
+- UI は stateless な composable に切り出し、状態は呼び出し側でホイスティングすること
+- READ_MEDIA_IMAGES などの権限は追加しないこと（Photo Picker には不要）
+```
+
+差分を確認して Accept し、実行。ボタンから写真を選んで表示されれば成功です。
+
+![TODO: エミュレータで Photo Picker が開いている画面と、選んだ写真が表示された画面（2枚並べる）](img/11-photo-picker.png)
+
+> aside negative
+> エミュレータに写真がない場合は、PC から画像ファイルをエミュレータ画面にドラッグ＆ドロップすると追加できます。
+
+### ステップ2：カメラ Intent（差分レビュー演習つき）
+
+次に、カメラアプリを Intent で呼び出して撮影できるようにします。
+
+```
+「カメラで撮影」ボタンを追加してください。
+
+制約:
+- ACTION_IMAGE_CAPTURE の Intent でカメラアプリを起動すること（CameraX などのライブラリは使わない）
+- 撮影画像は FileProvider 経由の Uri に保存すること（EXTRA_OUTPUT を使う）
+- CAMERA 権限は AndroidManifest.xml に追加しないこと（この Intent には不要）
+- 撮った写真は既存の画像表示エリアに表示すること
+```
+
+### 差分レビュー演習
+
+Accept する前に、次のチェックリストで差分をレビューしてください。
+
+* `AndroidManifest.xml` に `<uses-permission android:name="android.permission.CAMERA" />` が**追加されていないか**。`ACTION_IMAGE_CAPTURE` に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう
+* FileProvider の `authorities` が `applicationId` ベースになっているか
+* `file_paths.xml` の保存先が妥当か（`cache-path` など）
+* 頼んでいない依存やファイル変更が混ざっていないか
+
+> aside positive
+> これが Agent 時代のコードレビューです。**制約に違反していないかを人間が検証する**——このループを回せることが、Agent を安心して実務投入できるかの分かれ目です。
+
+実行して、撮影 → 表示まで確認しましょう。
+
+![TODO: エミュレータのカメラ（仮想3D空間）で撮影している画面と、撮った写真がアプリに表示された画面（2枚並べる）](img/12-camera-capture.png)
+
+> aside negative
+> エミュレータのカメラには擬似的な3D空間が映ります。実機ならより実感が湧きます。
+
+動いたらコミットしておきましょう。
+
+## 絵文字スタンプを実装する
+Duration: 30
+
+メイン機能です。状態設計を**プロンプトで指定**しながら進めます。
+
+### ステップ1：絵文字パレット
+
+```
+画面下部に絵文字パレットを追加してください。
+
+制約:
+- 絵文字は 😀🎉❤️⭐🐱🔥 の6種類を LazyRow で横並びに表示
+- 選択中の絵文字は枠線などで強調表示
+- 「選択中の絵文字」の状態は親 composable にホイスティングすること
+```
+
+![TODO: 画面下に絵文字が横並びし、1つが選択強調されている画面](img/13-emoji-row.png)
+
+### ステップ2：タップでスタンプを配置
+
+データ構造まで指定して依頼します。
+
+```
+写真の上をタップしたら、選択中の絵文字をその位置に配置する機能を実装してください。
+
+制約:
+- スタンプは data class Stamp(val emoji: String, val offset: Offset) のリストとして管理
+- 状態はまず remember で保持する（ViewModel は使わない）
+- pointerInput の detectTapGestures でタップを検出
+- タップ位置がスタンプの中心になるように配置
+```
+
+実行して、タップ → スタンプ配置を確認しましょう。🎉 動いたらコミット。
+
+![TODO: 写真の上に絵文字スタンプが複数置かれた画面（＝ほぼ完成形。冒頭の完成イメージと同じ写真でも良い）](img/14-emoji-stamped.png)
+
+> aside positive
+> **座標系の罠**：`ContentScale.Fit` で画像を表示していると、レターボックス部分のせいで「見た目のタップ位置」と「画像上の位置」がずれることがあります。ずれに気づいたら、Agent に「タップ座標と画像の表示領域の関係を説明して」と聞いてみてください。**生成されたコードを説明させる**のも Agent の重要な使い方です。
+
+### ステップ3：ドラッグ移動と削除
+
+```
+置いたスタンプをドラッグで移動できるようにしてください。
+detectDragGestures を使い、ドラッグ対象はタッチ位置に最も近いスタンプとします。
+```
+
+```
+スタンプをロングタップしたら削除できるようにしてください。
+```
+
+タップ配置・ドラッグ・ロングタップ削除が共存すると、ジェスチャの競合が起きることがあります。おかしな挙動になったら、**現象を具体的に**伝えて直させましょう（例：「スタンプをドラッグしようとすると新しいスタンプが置かれてしまう。ドラッグとタップを区別して」）。
+
+## 自由演習：アプリを育てる
+Duration: 15
+
+ここからは自由時間です。学んだ「制約付きプロンプト＋差分レビュー」を使って、アプリを好きに育ててください。ネタに困ったら：
+
+* **共有機能**：`ACTION_SEND` でスタンプ済み画像を共有（Intent の応用）
+* **画像として保存**：写真＋スタンプを Bitmap に合成して MediaStore に保存。表示座標→画像ピクセル座標の変換が必要になる、本題材で一番歯ごたえのある課題です
+* **拡大縮小・回転**：`transformable` でスタンプをピンチ操作
+* **Undo**：直前のスタンプ操作を取り消し
+* **リファクタリング**：「状態管理を ViewModel + StateFlow に移行して。UI の見た目は変えないこと」と Agent に頼み、リファクタ差分をレビューする練習
+* **コードレビュー依頼**：Chat モードに切り替えて「`MainActivity.kt` をレビューして。再コンポジションの観点で問題はない？」
+
+> aside positive
+> どの課題でも、**制約を先に決めてから頼む** → **差分をレビューする** → **動作確認してコミット**のループを守ってみてください。
+
+## うまくいかないときは
+Duration: 5
+
+* **Agent が大きく書き換えすぎた** — Reject して指示を分割。「変更は最小限に。既存の構造は維持して」という制約を足す。Accept 済みなら Git / Local History で戻す
+* **会話が長くなって精度が落ちてきた** — 新しいセッションで仕切り直す。「現在こういう構成で、次に〜をしたい」と現状を要約して渡すと立ち上がりが速い
+* **ビルドエラー** — エラー全文をそのまま貼り付けて修正させる。Agent が自分でビルドして確認するのを待つのも有効
+* **生成コードが古い** — 「最新の安定版 API を使って」「deprecated API は使わない」を Rules に追加（その場しのぎでなく仕組みで解決）
+* **どうしても先に進めない** — [完成版リポジトリ（TODO: URL を差し替え）](https://github.com/yanzm/EmojiStamp) を参照してください。Agent の出力は毎回異なるので一致はしませんが、実装の方向性の確認に使えます
+
+## まとめ
+Duration: 5
+
+おつかれさまでした！🎉
+
+このハンズオンで体験したこと：
+
+* Agent モードの仕組みと、**Rules** によるプロジェクト固有のカスタマイズ
+* **制約付きプロンプト**で設計判断を人間が握ったまま、実装を Agent に任せる技術
+* **差分レビュー**で過剰な変更・不要な権限・依存の混入を検出するループ
+* Photo Picker、カメラ Intent + FileProvider、Compose のジェスチャ処理を Agent とペアで実装
+
+### 実務に持ち帰るなら
+
+* チームの規約・アーキテクチャ方針を **Rules に落とす**ところから始める
+* **小さく頼んで差分レビュー**。PR 文化とまったく同じ
+* Agent の出力に迷ったら**説明させる・レビューさせる**（Chat の使いどころ）
+
+### 詳細情報
+
+* [Gemini in Android Studio](https://developer.android.com/studio/gemini?hl=ja)
+* [Photo Picker](https://developer.android.com/training/data-storage/shared/photopicker?hl=ja)
+* [カメラアプリにインテントで撮影を依頼する](https://developer.android.com/training/camera/camera-intents?hl=ja)
+* [Jetpack Compose のポインタ入力](https://developer.android.com/develop/ui/compose/touch-input/pointer-input?hl=ja)
