@@ -1,4 +1,4 @@
-summary: Gemini in Android Studio の Agent モードを使いこなし、写真に絵文字スタンプを押せるアプリを実装します。Rules 設定、コンテキスト管理、制約付きプロンプト、差分レビューなど、Agent を実務で使うための技術を体験する中級者向けハンズオンです。
+summary: Gemini in Android Studio の Agent モードを使いこなし、写真に絵文字スタンプを押せるアプリを実装します。AGENTS.md・Android Skills・制約付きプロンプト・差分レビューなど、Agent を実務で使うための技術を体験する中級者向けハンズオンです。
 id: emoji-stamp-with-gemini
 categories: Android, AI
 environments: Web
@@ -13,7 +13,7 @@ Duration: 5
 
 このハンズオンへようこそ！
 
-この Codelab では、**Gemini in Android Studio の Agent モード**を使って Android アプリを実装します。単に「AI にコードを書かせる」のではなく、**Rules・コンテキスト・制約付きプロンプト・差分レビュー**といった、Agent を実務の開発で使いこなすための技術を体験するのがゴールです。
+この Codelab では、**Gemini in Android Studio の Agent モード**を使って Android アプリを実装します。単に「AI にコードを書かせる」のではなく、**AGENTS.md・スキル・制約付きプロンプト・差分レビュー**といった、Agent を実務の開発で使いこなすための技術を体験するのがゴールです。
 
 ### 前提条件
 
@@ -28,7 +28,7 @@ Duration: 5
 
 ### 学べること
 
-* Agent モードの仕組み（Chat との違い、コンテキストの渡り方）
+* Agent モードの仕組み（持っているツール、コンテキストの渡り方）
 * **AGENTS.md** と **Android Skills** で Agent の振る舞いをプロジェクトに合わせてカスタマイズする方法
 * **制約付きプロンプト**で実装方式・アーキテクチャを制御する技術
 * Agent が生成した**差分をレビューする観点**（過剰な変更・不要な依存・権限の混入）
@@ -133,7 +133,7 @@ Gemini の設定は `Settings > Tools > AI` にまとまっています（ステ
 
 ### Android Skills — オンデマンドの専門知識
 
-AGENTS.md が「常に効く掟」なら、**スキル**は「必要なときだけ読み込まれる専門知識」です。[エージェントスキルのオープン標準](https://agentskills.io/)に基づく Markdown ベースの仕組みで、Google が Android 開発のベストプラクティス集を [android/skills](https://github.com/android/skills) リポジトリで公式提供しています（エッジツーエッジ対応、adaptive UI、テスト整備、ライブラリ移行など）。
+AGENTS.md が「常に効く掟」なら、**スキル**は「必要なときだけ読み込まれる専門知識」です。[エージェントスキルのオープン標準](https://agentskills.io/)に基づく Markdown ベースの仕組みで、Google が Android 開発のベストプラクティス集を [android/skills](https://github.com/android/skills) リポジトリで公式提供しています。
 
 **Google 公式の Android スキルは最初から同梱されています。**`Settings > Tools > AI` の **Enable Pre-Bundled Skills** が有効（デフォルト）なら、新しいエージェントセッションで自動的に使われます。エッジツーエッジ対応、adaptive UI、テスト整備、ライブラリ移行などのベストプラクティスが含まれます。
 
@@ -294,7 +294,7 @@ Duration: 5
 * **Agent が大きく書き換えすぎた** — Reject して指示を分割。「変更は最小限に。既存の構造は維持して」という制約を足す。Accept 済みなら Git / Local History で戻す
 * **会話が長くなって精度が落ちてきた** — 新しいセッションで仕切り直す。「現在こういう構成で、次に〜をしたい」と現状を要約して渡すと立ち上がりが速い
 * **ビルドエラー** — エラー全文をそのまま貼り付けて修正させる。Agent が自分でビルドして確認するのを待つのも有効
-* **生成コードが古い** — 「最新の安定版 API を使って」「deprecated API は使わない」を Rules に追加（その場しのぎでなく仕組みで解決）
+* **生成コードが古い** — 「最新の安定版 API を使って」「deprecated API は使わない」を AGENTS.md に追加（その場しのぎでなく仕組みで解決）
 * **どうしても先に進めない** — [完成版リポジトリ（TODO: URL を差し替え）](https://github.com/yanzm/EmojiStamp) を参照してください。Agent の出力は毎回異なるので一致はしませんが、実装の方向性の確認に使えます
 
 ## まとめ
@@ -313,7 +313,7 @@ Duration: 5
 
 * チームの規約・アーキテクチャ方針を **AGENTS.md に落とす**ところから始める（バージョン管理してチームで共有）
 * **小さく頼んで差分レビュー**。PR 文化とまったく同じ
-* Agent の出力に迷ったら**説明させる・レビューさせる**（Chat の使いどころ）
+* Agent の出力に迷ったら**説明させる・レビューさせる**（ファイルを変更しない依頼も同じ Agent パネルでできる）
 
 ### 詳細情報
 
