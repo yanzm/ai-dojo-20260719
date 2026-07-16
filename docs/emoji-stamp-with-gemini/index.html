@@ -53,8 +53,8 @@
 <li>最新の安定版 Android Studio（Quail 2 以降）をインストール</li>
 <li>エミュレータ（API レベルは最新推奨）を作成、または実機を準備</li>
 <li>Android Studio で Google アカウントにサインインし、Gemini を有効化（無料枠で Agent Mode まで利用できます。レート制限あり）</li>
-<li>「Empty Activity」テンプレートで <code>EmojiStamp</code> という新規プロジェクトを作成し、一度ビルド・実行できることを確認</li>
 </ul>
+<p>プロジェクトの作成は当日みんなで一緒に行います。</p>
 </aside>
 <aside class="special"><p> Android Studio と Gemini の UI は更新頻度が高いため、この Codelab のスクリーンショットと実際の画面が多少異なる場合があります。適宜読み替えてください。</p>
 </aside>
@@ -62,15 +62,26 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="環境を確認する" duration="10">
-        <p>ハンズオン本編に入る前に、環境をチェックリストで確認します。</p>
-<h2 is-upgraded>チェックリスト</h2>
+      <google-codelab-step label="プロジェクトを作って環境を確認する" duration="15">
+        <p>まず、全員で同じプロジェクトを作るところから始めます。</p>
+<h2 is-upgraded>新しいプロジェクトを作る</h2>
 <ol type="1">
-<li><code>EmojiStamp</code> プロジェクトを Android Studio で開く（未作成なら「Empty Activity」テンプレートで作成。Name: <code>EmojiStamp</code>、他はデフォルトで OK）</li>
-<li>▶ Run でエミュレータ（または実機）に「Hello Android」が表示される</li>
-<li>ツールウィンドウバーの <strong>Agent</strong> アイコンから Agent パネルが開き、サインイン済みである</li>
+<li>Welcome 画面（または <code>File > New > New Project</code>）で <strong>New Project</strong> を選択</li>
+<li>テンプレートは <strong>「Empty Activity」</strong>（Compose）を選んで <strong>Next</strong></li>
+<li><strong>Name</strong> に <code>EmojiStamp</code> と入力し、他はデフォルトのまま <strong>Finish</strong></li>
+<li>Gradle Sync が終わるまで待ちます（初回は数分かかります。待っている間に次の Agent パネルの確認を済ませましょう）</li>
+</ol>
+<h2 is-upgraded>Agent パネルを確認する</h2>
+<ol type="1">
+<li>ツールウィンドウバーの <strong>Agent</strong> アイコンをクリックして Agent パネルを開く</li>
+<li>サインイン済みであることを確認（未サインインならここでサインイン）</li>
+<li>初めて Agent を使うときは <strong>「Project context required」</strong>（Agent がプロジェクトのソースファイルを読み取る旨の確認）が表示されるので、<strong>Proceed</strong> を押します</li>
 </ol>
 <p class="image-container"><img alt="TODO: Agent パネルを開いた状態の Android Studio。ツールウィンドウバーの Agent アイコンの場所を赤枠で示す" src="img/37c295442d31fd5b.png"></p>
+<h2 is-upgraded>動作確認</h2>
+<ol type="1">
+<li>Gradle Sync 完了後、▶ Run でエミュレータ（または実機）に「Hello Android」が表示されることを確認</li>
+</ol>
 <h2 is-upgraded>バージョン管理を有効にする</h2>
 <p>Agent は複数ファイルを一気に書き換えます。<strong>変更を差分で追い、いつでも戻せる状態</strong>にしておくのが Agent 活用の大前提です。</p>
 <ol type="1">

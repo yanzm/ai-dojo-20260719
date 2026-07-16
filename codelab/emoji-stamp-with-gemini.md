@@ -42,23 +42,35 @@ Duration: 5
 > * 最新の安定版 Android Studio（Quail 2 以降）をインストール
 > * エミュレータ（API レベルは最新推奨）を作成、または実機を準備
 > * Android Studio で Google アカウントにサインインし、Gemini を有効化（無料枠で Agent Mode まで利用できます。レート制限あり）
-> * 「Empty Activity」テンプレートで `EmojiStamp` という新規プロジェクトを作成し、一度ビルド・実行できることを確認
+>
+> プロジェクトの作成は当日みんなで一緒に行います。
 
 > aside positive
 > Android Studio と Gemini の UI は更新頻度が高いため、この Codelab のスクリーンショットと実際の画面が多少異なる場合があります。適宜読み替えてください。
 
-## 環境を確認する
-Duration: 10
+## プロジェクトを作って環境を確認する
+Duration: 15
 
-ハンズオン本編に入る前に、環境をチェックリストで確認します。
+まず、全員で同じプロジェクトを作るところから始めます。
 
-### チェックリスト
+### 新しいプロジェクトを作る
 
-1. `EmojiStamp` プロジェクトを Android Studio で開く（未作成なら「Empty Activity」テンプレートで作成。Name: `EmojiStamp`、他はデフォルトで OK）
-2. ▶ Run でエミュレータ（または実機）に「Hello Android」が表示される
-3. ツールウィンドウバーの **Agent** アイコンから Agent パネルが開き、サインイン済みである
+1. Welcome 画面（または `File > New > New Project`）で **New Project** を選択
+2. テンプレートは **「Empty Activity」**（Compose）を選んで **Next**
+3. **Name** に `EmojiStamp` と入力し、他はデフォルトのまま **Finish**
+4. Gradle Sync が終わるまで待ちます（初回は数分かかります。待っている間に次の Agent パネルの確認を済ませましょう）
+
+### Agent パネルを確認する
+
+1. ツールウィンドウバーの **Agent** アイコンをクリックして Agent パネルを開く
+2. サインイン済みであることを確認（未サインインならここでサインイン）
+3. 初めて Agent を使うときは **「Project context required」**（Agent がプロジェクトのソースファイルを読み取る旨の確認）が表示されるので、**Proceed** を押します
 
 ![TODO: Agent パネルを開いた状態の Android Studio。ツールウィンドウバーの Agent アイコンの場所を赤枠で示す](img/08-agent-panel.png)
+
+### 動作確認
+
+1. Gradle Sync 完了後、▶ Run でエミュレータ（または実機）に「Hello Android」が表示されることを確認
 
 ### バージョン管理を有効にする
 
