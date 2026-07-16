@@ -108,7 +108,7 @@
 <li><strong>Skills</strong>：<code>Tools > AI</code> 直下の <strong>Enable Pre-Bundled Skills</strong> で、同梱の Android スキル（後述）を有効にできます（デフォルトで有効）</li>
 </ul>
 <p>使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（例：Gemini 3 Flash Preview）。</p>
-<aside class="special"><p> コードは同意なしにマシンの外へ送られません。ただし<strong>無料枠では共有したデータが AI の改善に使われる場合があります</strong>（有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランと設定を選んでください。</p>
+<aside class="special"><p><strong>プライバシーについて</strong>：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは <strong><code>.aiexclude</code></strong> ファイル（<code>.gitignore</code> と同じ構文）で除外できます。また、<strong>無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります</strong>（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。</p>
 </aside>
 <h2 is-upgraded>AGENTS.md でプロジェクトの掟を決める</h2>
 <p><strong>AGENTS.md</strong> は、すべての指示の前に自動で読み込まれる「プロジェクトの掟」です。ソースコードと一緒にバージョン管理できるため、チームの規約を Agent に守らせる仕組みとして機能します。</p>
