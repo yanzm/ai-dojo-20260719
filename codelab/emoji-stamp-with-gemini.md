@@ -56,7 +56,7 @@ Duration: 15
 ### 新しいプロジェクトを作る
 
 1. Welcome 画面（または `File > New > New Project`）で **New Project** を選択
-2. テンプレートは **「Empty Activity」**（Compose）を選んで **Next**
+2. テンプレートは **「Empty Activity」** を選んで **Next**（これが Jetpack Compose のテンプレートです。似た名前の「Empty **Views** Activity」と間違えないように）
 
 ![New Project のテンプレート選択画面。Empty Activity を選択](img/02-new-project-template.png)
 
