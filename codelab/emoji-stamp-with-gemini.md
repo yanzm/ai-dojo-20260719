@@ -68,11 +68,14 @@ Duration: 15
 
 ### Agent パネルを確認する
 
-1. ツールウィンドウバーの **Agent** アイコンをクリックして Agent パネルを開く
-2. サインイン済みであることを確認（未サインインならここでサインイン）
-3. 初めて Agent を使うときは **「Project context required」**（Agent がプロジェクトのソースファイルを読み取る旨の確認）が表示されるので、**Proceed** を押します
+1. ツールウィンドウバーの **Agent** アイコンをクリックして Agent パネルを開きます
+2. 初めて Agent を使うプロジェクトでは **「Project context required」**（Agent がプロジェクトのソースファイルを読み取る旨の確認）が表示されるので、**Proceed** を押します
 
-![TODO: Agent パネルを開いた状態の Android Studio。ツールウィンドウバーの Agent アイコンの場所を赤枠で示す](img/08-agent-panel.png)
+![Agent アイコンの場所と「Project context required」の確認。Proceed を押す](img/04-project-context-required.png)
+
+3. 未サインインの場合は **「Welcome to Gemini」** が表示されるので、**Sign in to Google** からサインインします（事前準備でサインイン済みの場合は表示されません）
+
+![Welcome to Gemini 画面。Sign in to Google からサインイン](img/05-welcome-to-gemini.png)
 
 ### 動作確認
 
