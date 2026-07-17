@@ -99,7 +99,7 @@
 <li>変更ファイル一覧（Changes / Unversioned Files）を<strong>すべてチェック</strong>します</li>
 <li>コミットメッセージに <code>initial commit</code> と入力し、<strong>Commit</strong> ボタンを押します</li>
 </ol>
-<aside class="warning"><p> 途中で「Add File to Git」のような確認ダイアログが出たら <strong>Add</strong> で OK です。</p>
+<aside class="warning"><p> 途中で「Add File to Git」のような確認ダイアログが出たら <strong>Add</strong> で OK です。また、コミット時に <strong>「Line Separators Warning」</strong>（CRLF 改行をコミットしようとしている、という警告）が出たら <strong>Commit As Is</strong> を選んでください。CRLF なのは Windows 用スクリプト（<code>gradlew.bat</code>）で、そのままで問題ありません（<strong>Fix and Commit</strong> は git のグローバル設定を書き換えるので、ここでは選ばなくて OK です）。</p>
 </aside>
 <aside class="special"><p> 以降、各ステップが動いたらこまめにコミットしましょう。「Agent が変な方向に書き換えた」ときに、直前の動く状態へ即座に戻れます。これは実務でも同じです。</p>
 </aside>

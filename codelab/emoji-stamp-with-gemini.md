@@ -91,7 +91,7 @@ Agent は複数ファイルを一気に書き換えます。**変更を差分で
 4. コミットメッセージに `initial commit` と入力し、**Commit** ボタンを押します
 
 > aside negative
-> 途中で「Add File to Git」のような確認ダイアログが出たら **Add** で OK です。
+> 途中で「Add File to Git」のような確認ダイアログが出たら **Add** で OK です。また、コミット時に **「Line Separators Warning」**（CRLF 改行をコミットしようとしている、という警告）が出たら **Commit As Is** を選んでください。CRLF なのは Windows 用スクリプト（`gradlew.bat`）で、そのままで問題ありません（**Fix and Commit** は git のグローバル設定を書き換えるので、ここでは選ばなくて OK です）。
 
 > aside positive
 > 以降、各ステップが動いたらこまめにコミットしましょう。「Agent が変な方向に書き換えた」ときに、直前の動く状態へ即座に戻れます。これは実務でも同じです。
