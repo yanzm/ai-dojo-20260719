@@ -82,8 +82,13 @@ Duration: 15
 
 Agent は複数ファイルを一気に書き換えます。**変更を差分で追い、いつでも戻せる状態**にしておくのが Agent 活用の大前提です。
 
-1. メニューから VCS を有効化（`VCS > Enable Version Control Integration...` → Git）
-2. 初期状態をコミットしておきます
+1. メニューの `VCS > Enable Version Control Integration...` を選び、**Git** を選択して OK
+2. 左端のツールウィンドウバーの **Commit** タブを開きます（またはメニューの `Git > Commit...`）
+3. 変更ファイル一覧（Changes / Unversioned Files）を**すべてチェック**します
+4. コミットメッセージに `initial commit` と入力し、**Commit** ボタンを押します
+
+> aside negative
+> 途中で「Add File to Git」のような確認ダイアログが出たら **Add** で OK です。
 
 > aside positive
 > 以降、各ステップが動いたらこまめにコミットしましょう。「Agent が変な方向に書き換えた」ときに、直前の動く状態へ即座に戻れます。これは実務でも同じです。
