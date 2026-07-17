@@ -57,7 +57,13 @@ Duration: 15
 
 1. Welcome 画面（または `File > New > New Project`）で **New Project** を選択
 2. テンプレートは **「Empty Activity」**（Compose）を選んで **Next**
+
+![New Project のテンプレート選択画面。Empty Activity を選択](img/02-new-project-template.png)
+
 3. **Name** に `EmojiStamp` と入力し、他はデフォルトのまま **Finish**
+
+![プロジェクト設定画面。Name に EmojiStamp と入力](img/03-new-project-settings.png)
+
 4. Gradle Sync が終わるまで待ちます（初回は数分かかります。待っている間に次の Agent パネルの確認を済ませましょう）
 
 ### Agent パネルを確認する
