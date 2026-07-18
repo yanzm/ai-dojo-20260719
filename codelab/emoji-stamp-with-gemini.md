@@ -474,7 +474,7 @@ Duration: 5
 * **ビルドエラー** — エラー全文をそのまま貼り付けて修正させる。Agent が自分でビルドして確認するのを待つのも有効
 * **「RESOURCE_EXHAUSTED: We are currently experiencing high demand」** — 無料枠のレート制限、または混雑です。自動リトライされるので少し待ちましょう。頻発する場合は数分おいてから再開を
 * **生成コードが古い** — 「最新の安定版 API を使って」「deprecated API は使わない」を AGENTS.md に追加（その場しのぎでなく仕組みで解決）
-* **どうしても先に進めない** — [完成版リポジトリ（TODO: URL を差し替え）](https://github.com/yanzm/EmojiStamp) を参照してください。Agent の出力は毎回異なるので一致はしませんが、実装の方向性の確認に使えます
+* **どうしても先に進めない** — [完成版のコード](https://github.com/yanzm/ai-dojo-20260719/tree/main/app/EmojiStamp) を参照してください。Agent の出力は毎回異なるので一致はしませんが、実装の方向性の確認に使えます
 
 ## まとめ
 Duration: 5
