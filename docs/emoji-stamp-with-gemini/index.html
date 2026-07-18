@@ -231,10 +231,11 @@
 <p class="image-container"><img alt="Always allow を選ぶと Agent Permissions の Write source files in the project だけが Always allow に変わる" src="img/7e2df28dc0631a7d.png"></p>
 <p>ビルドでの検証まで完了すると、Walkthrough に更新内容と検証結果がまとまり、<strong>Changes</strong> パネルに差分が表示されます。<code>libs.versions.toml</code> の差分を確認して <strong>Keep All</strong> します。</p>
 <p class="image-container"><img alt="完了後の画面。Walkthrough に更新内容と検証結果、Changes パネルの Keep All で確定" src="img/4229a04da09937fa.png"></p>
-<p>最後に、コミットも Agent に頼んでみましょう。</p>
-<pre><code>ここまでの変更をコミットして
+<p>最後に、コミットも Agent に頼んでみましょう。テンプレート直後のプロジェクトには追跡不要なファイルが混ざりがちなので、<code>.gitignore</code> のチェックも一緒に依頼するのがおすすめです。</p>
+<pre><code>ここまでの変更をコミットしたい。
+.gitignore に追加したほうがいいものがあるかチェックしてください。
 </code></pre>
-<p>Agent は <code>git status</code> で状況を確認してから進めます。今回は、エージェントの作業ログ（<code>.artifacts/</code>）や IDE の設定ファイルを <code>.gitignore</code> に追加する提案までしてくれました（AGENTS.md はリポジトリで管理する想定なのでコミットに含める、という判断も妥当です）。</p>
+<p>Agent は <code>git status</code> で状況を確認し、エージェントの作業ログ（<code>.artifacts/</code>）や IDE の設定ファイル・ビルドキャッシュを <code>.gitignore</code> に追加するよう提案してくれます。AGENTS.md については「リポジトリで管理する想定ならコミットに含める」という妥当な判断も添えてくれました。</p>
 <p class="image-container"><img alt="Agent が git status を確認し、.gitignore への追加を提案している" style="width: 485.00px" src="img/7b8f138aa52dc1c4.png"></p>
 <p>「はい」で進めると <code>.gitignore</code> を更新し、コミット対象を再確認してくれます。</p>
 <p class="image-container"><img alt=".gitignore を更新し、コミット対象を確認している" style="width: 485.00px" src="img/344e6f0a5e0ad4d7.png"></p>
