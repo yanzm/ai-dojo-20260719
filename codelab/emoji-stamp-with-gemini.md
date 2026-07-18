@@ -313,7 +313,13 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 > aside negative
 > エミュレータのカメラには擬似的な3D空間が映ります。実機ならより実感が湧きます。
 
-動いたらコミットしておきましょう。
+動いたらコミットしておきましょう。セクション2の手順で手動コミットしてもよいですが、**Agent に「ここまでの変更をコミットして」と頼む**こともできます。Agent は `git status` で状況を確認してから `git add` / `git commit` を実行します。シェルコマンドの実行は都度許可を求められるので、コマンドの内容を確認して **Allow** しましょう（「Add `git add` to allow list」にチェックを入れると、同じコマンドは以後確認なしで実行されます）。
+
+<img src="img/28-agent-commit-permission.png" width="470" alt="Agent が git add の実行許可を求めている画面。allow list へ追加するチェックボックス付き" />
+
+コミットメッセージも変更内容から生成されます。
+
+<img src="img/29-agent-committed.png" width="490" alt="Agent が git commit を実行し、コミットメッセージと変更ファイルを報告している" />
 
 ## 絵文字スタンプを実装する
 Duration: 30
