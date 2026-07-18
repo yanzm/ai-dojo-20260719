@@ -131,7 +131,7 @@ Agent の出力品質は「何を知っているか」で決まります。
 
 Gemini の設定は `Settings > Tools > AI` にまとまっています（ステータスバーの Gemini アイコン → **Configure Gemini...** からも開けます）。本編に入る前に、どんな項目があるか眺めておきましょう。
 
-* **Agent Permissions**：Agent のファイル操作の許可を「プロジェクト内の読み取り／書き込み／削除」「プロジェクト外へのアクセス」などのカテゴリごとに **Always allow / Ask every time / Don't allow** で設定できます。ハンズオンはデフォルト（書き込みは都度確認）のまま進めましょう
+* **Agent Permissions**：Agent のファイル操作の許可を「プロジェクト内の読み取り／書き込み／削除」「プロジェクト外へのアクセス」などのカテゴリごとに **Always allow / Ask every time / Don't allow** で設定できます。このハンズオンでは**プロジェクト内の書き込みは Always allow** で進めます（理由は後述）
 * **Agent Shell Sandbox**：Agent が実行するシェルコマンドをサンドボックス内で走らせる安全装置です
 * **Model Providers**：現在のプラン（無料 / AI Pro / AI Ultra）とモデルごとの利用量を確認できます。Google AI Studio の API キーや他プロバイダの追加もここから
 * **Prompt Library**：**Rules**（すべての指示に自動適用される指示。Scope を IDE / Project で切替）と **Saved Prompts**（`@prompt` で呼び出す定型プロンプト）を管理します
@@ -221,16 +221,19 @@ AGENTS.md が「常に効く掟」なら、**スキル**は「必要なときだ
 
 ### 差分レビューの観点
 
-Agent の変更にはレビューの機会が複数あります。**作業前の実装計画**、**書き込み前の Proposed change（差分）と許可**、そして**完了後の Changes パネル（Keep All / Revert All）**です。中級者のあなたはコードが読めるので、**PR レビューと同じ目**で見てください。特に注意すべきは：
+Agent の変更に対する主なレビューポイントは2つ——**作業前の実装計画**と、**完了後の Changes パネル（Keep All / Revert All）**です。中級者のあなたはコードが読めるので、**PR レビューと同じ目**で見てください。特に注意すべきは：
 
 * 頼んでいないファイルまで書き換えていないか
 * 不要な依存関係が `build.gradle.kts` に追加されていないか
 * **不要な権限が `AndroidManifest.xml` に追加されていないか**（後のステップで実例が出ます）
 * 動くけど古い書き方（deprecated API、非推奨パターン）になっていないか
 
-デフォルト設定では、Agent がファイルを書き込む前に、次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。「Proposed change to:」をクリックすると差分を確認できるので、**レビューしてから許可**しましょう。**Allow**（今回だけ許可）と **Always allow**（以後は確認なし）の使い分けもここで行います。
+デフォルト設定では、Agent がファイルを書き込む**たびに**次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。ただし、毎回 Allow を押していてはテンポが上がりません。バージョン管理でいつでも戻せるようにしてある今回は、最初に表示されたときに **Always allow** を選んでプロジェクト内の書き込みを許可してしまい、**人間のレビューは「実装計画」と「完了後の Changes パネル」に集約する**のがおすすめです。設計と結果の検証に集中し、途中経過は Agent に任せる——これが「加速」の作法です。
 
 <img src="img/24-write-permission.png" width="530" alt="Agent のファイル書き込み許可プロンプト。Allow / Cancel and do not allow / Always allow" />
+
+> aside negative
+> **Always allow にするのはプロジェクト内のファイル書き込みだけ**にしましょう。プロジェクト外への書き込みやシェルコマンドの実行は、都度確認のままにしておくのが安全です。
 
 ## 写真を取得する（Photo Picker とカメラ Intent）
 Duration: 30
@@ -258,7 +261,7 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 ![Agent が提示した実装計画。制約と AGENTS.md のルールが反映されている](img/25-implementation-plan.png)
 
-計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進め、ファイルを書き換える前に **Proposed change**（差分）と書き込み許可を求めてきます。差分を確認して **Allow** で進めましょう。
+計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進めます。ファイル書き込みの許可を求められたら **Always allow** を選びましょう。以後の確認がスキップされ、作業が止まりません（差分のレビューは完了後の Changes パネルでまとめて行います）。
 
 <img src="img/26-plan-approved-flow.png" width="600" alt="「はい」と返信すると Task List を作成し、Proposed change と書き込み許可を求めながら進む" />
 
@@ -289,7 +292,7 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 ### 差分レビュー演習
 
-許可（Allow）や **Keep All** の前に、次のチェックリストで差分をレビューしてください。
+**Keep All を押す前に**、次のチェックリストで差分をレビューしてください。
 
 * `AndroidManifest.xml` に `<uses-permission android:name="android.permission.CAMERA" />` が**追加されていないか**。`ACTION_IMAGE_CAPTURE` に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう
 * FileProvider の `authorities` が `applicationId` ベースになっているか

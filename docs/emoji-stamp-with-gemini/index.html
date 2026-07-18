@@ -131,7 +131,7 @@
 <h2 is-upgraded>AI の設定を確認する</h2>
 <p>Gemini の設定は <code>Settings > Tools > AI</code> にまとまっています（ステータスバーの Gemini アイコン → <strong>Configure Gemini...</strong> からも開けます）。本編に入る前に、どんな項目があるか眺めておきましょう。</p>
 <ul>
-<li><strong>Agent Permissions</strong>：Agent のファイル操作の許可を「プロジェクト内の読み取り／書き込み／削除」「プロジェクト外へのアクセス」などのカテゴリごとに <strong>Always allow / Ask every time / Don&#39;t allow</strong> で設定できます。ハンズオンはデフォルト（書き込みは都度確認）のまま進めましょう</li>
+<li><strong>Agent Permissions</strong>：Agent のファイル操作の許可を「プロジェクト内の読み取り／書き込み／削除」「プロジェクト外へのアクセス」などのカテゴリごとに <strong>Always allow / Ask every time / Don&#39;t allow</strong> で設定できます。このハンズオンでは<strong>プロジェクト内の書き込みは Always allow</strong> で進めます（理由は後述）</li>
 <li><strong>Agent Shell Sandbox</strong>：Agent が実行するシェルコマンドをサンドボックス内で走らせる安全装置です</li>
 <li><strong>Model Providers</strong>：現在のプラン（無料 / AI Pro / AI Ultra）とモデルごとの利用量を確認できます。Google AI Studio の API キーや他プロバイダの追加もここから</li>
 <li><strong>Prompt Library</strong>：<strong>Rules</strong>（すべての指示に自動適用される指示。Scope を IDE / Project で切替）と <strong>Saved Prompts</strong>（<code>@prompt</code> で呼び出す定型プロンプト）を管理します</li>
@@ -189,15 +189,17 @@
 <p>例えば <code>edge-to-edge</code> スキルを付けてエッジツーエッジ対応を依頼すると、Agent がまずスキルを読み込み（Activate Skill）、その手順に沿って作業を進めます。実行までは、後の自由演習で試してみてください。</p>
 <p class="image-container"><img alt="Agent が edge-to-edge スキルを読み込んで（Activate Skill / Read skill）作業を進める様子" style="width: 590.00px" src="img/7ba04dcfaef583d7.png"></p>
 <h2 is-upgraded>差分レビューの観点</h2>
-<p>Agent の変更にはレビューの機会が複数あります。<strong>作業前の実装計画</strong>、<strong>書き込み前の Proposed change（差分）と許可</strong>、そして**完了後の Changes パネル（Keep All / Revert All）**です。中級者のあなたはコードが読めるので、<strong>PR レビューと同じ目</strong>で見てください。特に注意すべきは：</p>
+<p>Agent の変更に対する主なレビューポイントは2つ——<strong>作業前の実装計画</strong>と、**完了後の Changes パネル（Keep All / Revert All）**です。中級者のあなたはコードが読めるので、<strong>PR レビューと同じ目</strong>で見てください。特に注意すべきは：</p>
 <ul>
 <li>頼んでいないファイルまで書き換えていないか</li>
 <li>不要な依存関係が <code>build.gradle.kts</code> に追加されていないか</li>
 <li><strong>不要な権限が </strong><strong><code>AndroidManifest.xml</code></strong><strong> に追加されていないか</strong>（後のステップで実例が出ます）</li>
 <li>動くけど古い書き方（deprecated API、非推奨パターン）になっていないか</li>
 </ul>
-<p>デフォルト設定では、Agent がファイルを書き込む前に、次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。「Proposed change to:」をクリックすると差分を確認できるので、<strong>レビューしてから許可</strong>しましょう。<strong>Allow</strong>（今回だけ許可）と <strong>Always allow</strong>（以後は確認なし）の使い分けもここで行います。</p>
+<p>デフォルト設定では、Agent がファイルを書き込む<strong>たびに</strong>次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。ただし、毎回 Allow を押していてはテンポが上がりません。バージョン管理でいつでも戻せるようにしてある今回は、最初に表示されたときに <strong>Always allow</strong> を選んでプロジェクト内の書き込みを許可してしまい、<strong>人間のレビューは「実装計画」と「完了後の Changes パネル」に集約する</strong>のがおすすめです。設計と結果の検証に集中し、途中経過は Agent に任せる——これが「加速」の作法です。</p>
 <p class="image-container"><img alt="Agent のファイル書き込み許可プロンプト。Allow / Cancel and do not allow / Always allow" style="width: 530.00px" src="img/af8fcc8fec4538e0.png"></p>
+<aside class="warning"><p><strong>Always allow にするのはプロジェクト内のファイル書き込みだけ</strong>にしましょう。プロジェクト外への書き込みやシェルコマンドの実行は、都度確認のままにしておくのが安全です。</p>
+</aside>
 
 
       </google-codelab-step>
@@ -218,7 +220,7 @@
 </code></pre>
 <p>Agent は、いきなりコードを書かずに<strong>実装計画（Implementation Plan）を提示して確認を求める</strong>ことがあります。計画はエディタにアーティファクトとして開くので、<strong>制約が反映されているか</strong>（Photo Picker を使っているか、stateless composable になっているか、余計な権限を足していないか）をここでレビューしましょう。依存関係を追加する場合は理由が書かれているはずです——AGENTS.md の「追加する場合は理由を説明する」が効いています。</p>
 <p class="image-container"><img alt="Agent が提示した実装計画。制約と AGENTS.md のルールが反映されている" src="img/aa573e189508cda2.png"></p>
-<p>計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進め、ファイルを書き換える前に <strong>Proposed change</strong>（差分）と書き込み許可を求めてきます。差分を確認して <strong>Allow</strong> で進めましょう。</p>
+<p>計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進めます。ファイル書き込みの許可を求められたら <strong>Always allow</strong> を選びましょう。以後の確認がスキップされ、作業が止まりません（差分のレビューは完了後の Changes パネルでまとめて行います）。</p>
 <p class="image-container"><img alt="「はい」と返信すると Task List を作成し、Proposed change と書き込み許可を求めながら進む" style="width: 600.00px" src="img/ae6507a45b8312a2.png"></p>
 <p>作業が完了すると、<strong>Walkthrough</strong>（実装内容の解説ドキュメント）が作られ、<strong>Changes</strong> パネルに変更されたファイルの一覧が表示されます。ファイル名をクリックして差分をレビューし、問題なければ <strong>Keep All</strong> を選びます（やり直させるなら <strong>Revert All</strong>）。</p>
 <p class="image-container"><img alt="作業完了後の画面。Walkthrough と Changes パネル（Keep All / Revert All）" src="img/509d5d7f686580e2.png"></p>
@@ -237,7 +239,7 @@
 - 撮った写真は既存の画像表示エリアに表示すること
 </code></pre>
 <h2 is-upgraded>差分レビュー演習</h2>
-<p>許可（Allow）や <strong>Keep All</strong> の前に、次のチェックリストで差分をレビューしてください。</p>
+<p><strong>Keep All を押す前に</strong>、次のチェックリストで差分をレビューしてください。</p>
 <ul>
 <li><code>AndroidManifest.xml</code> に <code><uses-permission android:name="android.permission.CAMERA" /></code> が<strong>追加されていないか</strong>。<code>ACTION_IMAGE_CAPTURE</code> に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう</li>
 <li>FileProvider の <code>authorities</code> が <code>applicationId</code> ベースになっているか</li>
