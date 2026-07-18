@@ -91,6 +91,20 @@
 <ol type="1">
 <li>Gradle Sync 完了後、▶ Run でエミュレータ（または実機）に「Hello Android」が表示されることを確認</li>
 </ol>
+<aside class="warning"><p> 執筆時点の Quail 2 では、テンプレートが生成するプロジェクトの <code>compileSdk</code> が 36.1 になっており、同梱ライブラリ（<code>androidx.core:core-ktx:1.19.0</code>）が要求する 37 に足りないため、<strong>そのままではビルドが失敗します</strong>。「Dependency ‘androidx.core:core-ktx:1.19.0&#39; requires ... version 37 or later of the Android APIs」というエラーが出たら、次の手順で直します。</p>
+</aside>
+<p>エラーが出た場合の対処：</p>
+<ol type="1">
+<li>Build Output のエラーメッセージ末尾にある <strong>「Update minCompileSdk in modules with dependencies that require a higher minCompileSdk.」</strong> リンクをクリックします</li>
+</ol>
+<p class="image-container"><img alt="Build Output のエラー。末尾のクイックフィックスリンクをクリック" src="img/c38e6dbf4196c55.png"></p>
+<ol type="1" start="2">
+<li><strong>Refactoring Preview</strong> が開き、<code>app/build.gradle.kts</code> の <code>compileSdk</code> の更新内容が表示されるので、<strong>Refactor</strong> をクリックします</li>
+</ol>
+<p class="image-container"><img alt="Refactoring Preview で更新内容を確認して Refactor をクリック" src="img/d0f7698aba49957d.png"></p>
+<ol type="1" start="3">
+<li>もう一度 ▶ Run して、「Hello Android」が表示されれば OK です</li>
+</ol>
 <h2 is-upgraded>バージョン管理を有効にする</h2>
 <p>Agent は複数ファイルを一気に書き換えます。<strong>変更を差分で追い、いつでも戻せる状態</strong>にしておくのが Agent 活用の大前提です。</p>
 <ol type="1">
