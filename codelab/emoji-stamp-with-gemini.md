@@ -221,16 +221,14 @@ AGENTS.md が「常に効く掟」なら、**スキル**は「必要なときだ
 
 ### 差分レビューの観点
 
-Agent は変更を差分で提案し、あなたが **Accept / Reject** を判断します。中級者のあなたはコードが読めるので、**PR レビューと同じ目**で見てください。特に注意すべきは：
+Agent の変更にはレビューの機会が複数あります。**作業前の実装計画**、**書き込み前の Proposed change（差分）と許可**、そして**完了後の Changes パネル（Keep All / Revert All）**です。中級者のあなたはコードが読めるので、**PR レビューと同じ目**で見てください。特に注意すべきは：
 
 * 頼んでいないファイルまで書き換えていないか
 * 不要な依存関係が `build.gradle.kts` に追加されていないか
 * **不要な権限が `AndroidManifest.xml` に追加されていないか**（後のステップで実例が出ます）
 * 動くけど古い書き方（deprecated API、非推奨パターン）になっていないか
 
-![TODO: Agent が差分を提案して Accept / Reject ボタンが表示されている画面（このハンズオンで一番よく見る画面）](img/10-agent-diff-accept.png)
-
-また、デフォルト設定では Agent がファイルを書き込む前に、次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。「Proposed change to:」をクリックすると差分を確認できるので、**レビューしてから許可**しましょう。**Allow**（今回だけ許可）と **Always allow**（以後は確認なし）の使い分けもここで行います。
+デフォルト設定では、Agent がファイルを書き込む前に、次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。「Proposed change to:」をクリックすると差分を確認できるので、**レビューしてから許可**しましょう。**Allow**（今回だけ許可）と **Always allow**（以後は確認なし）の使い分けもここで行います。
 
 <img src="img/24-write-permission.png" width="530" alt="Agent のファイル書き込み許可プロンプト。Allow / Cancel and do not allow / Always allow" />
 
@@ -264,7 +262,11 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 <img src="img/26-plan-approved-flow.png" width="600" alt="「はい」と返信すると Task List を作成し、Proposed change と書き込み許可を求めながら進む" />
 
-完了したら実行して、ボタンから写真を選んで表示されれば成功です。
+作業が完了すると、**Walkthrough**（実装内容の解説ドキュメント）が作られ、**Changes** パネルに変更されたファイルの一覧が表示されます。ファイル名をクリックして差分をレビューし、問題なければ **Keep All** を選びます（やり直させるなら **Revert All**）。
+
+![作業完了後の画面。Walkthrough と Changes パネル（Keep All / Revert All）](img/10-changes-keep-revert.png)
+
+実行して、ボタンから写真を選んで表示されれば成功です。
 
 ![TODO: エミュレータで Photo Picker が開いている画面と、選んだ写真が表示された画面（2枚並べる）](img/11-photo-picker.png)
 
@@ -287,7 +289,7 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 ### 差分レビュー演習
 
-Accept する前に、次のチェックリストで差分をレビューしてください。
+許可（Allow）や **Keep All** の前に、次のチェックリストで差分をレビューしてください。
 
 * `AndroidManifest.xml` に `<uses-permission android:name="android.permission.CAMERA" />` が**追加されていないか**。`ACTION_IMAGE_CAPTURE` に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう
 * FileProvider の `authorities` が `applicationId` ベースになっているか
@@ -377,7 +379,7 @@ Duration: 10
 ## うまくいかないときは
 Duration: 5
 
-* **Agent が大きく書き換えすぎた** — Reject して指示を分割。「変更は最小限に。既存の構造は維持して」という制約を足す。Accept 済みなら Git / Local History で戻す
+* **Agent が大きく書き換えすぎた** — **Revert All** で戻して指示を分割。「変更は最小限に。既存の構造は維持して」という制約を足す。Keep 済みなら Git / Local History で戻す
 * **会話が長くなって精度が落ちてきた** — **New Conversation** で仕切り直す（会話ごとにコンテキストは独立）。「現在こういう構成で、次に〜をしたい」と現状を要約して渡すと立ち上がりが速い
 * **ビルドエラー** — エラー全文をそのまま貼り付けて修正させる。Agent が自分でビルドして確認するのを待つのも有効
 * **「RESOURCE_EXHAUSTED: We are currently experiencing high demand」** — 無料枠のレート制限、または混雑です。自動リトライされるので少し待ちましょう。頻発する場合は数分おいてから再開を
