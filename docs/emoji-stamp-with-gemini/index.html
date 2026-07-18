@@ -38,7 +38,7 @@
 </ul>
 <h2 is-upgraded>作るもの</h2>
 <p>ギャラリーから選んだ写真、またはカメラ Intent で撮った写真の上に、絵文字スタンプをペタペタ貼れるアプリです。小さな題材ですが、Photo Picker / カメラ Intent + FileProvider / ジェスチャ処理 / 状態管理と論点が揃っていて、<strong>Agent への指示の良し悪しが結果に直結します</strong>。</p>
-<p class="image-container"><img alt="TODO: 完成アプリのスクリーンショット（写真の上に絵文字スタンプが3〜4個載ったエミュレータ画面。最初に見せる「ゴール」なので一番映える写真で）" src="img/38d88b6566422d35.png"></p>
+<p class="image-container"><img alt="完成アプリ。写真の上に絵文字スタンプが複数配置されている" style="width: 400.00px" src="img/7731cccc5ce341d7.png"></p>
 <h2 is-upgraded>学べること</h2>
 <ul>
 <li>Agent モードの仕組み（持っているツール、コンテキストの渡り方）</li>
@@ -284,7 +284,7 @@
 - タップ位置がスタンプの中心になるように配置
 </code></pre>
 <p>実行して、タップ → スタンプ配置を確認しましょう。🎉 動いたらコミット。</p>
-<p class="image-container"><img alt="TODO: 写真の上に絵文字スタンプが複数置かれた画面（＝ほぼ完成形。冒頭の完成イメージと同じ写真でも良い）" src="img/5827a728de669835.png"></p>
+<p class="image-container"><img alt="写真の上に星とハートのスタンプが複数配置された画面" style="width: 400.00px" src="img/7731cccc5ce341d7.png"></p>
 <aside class="special"><p><strong>座標系の罠</strong>：<code>ContentScale.Fit</code> で画像を表示していると、レターボックス部分のせいで「見た目のタップ位置」と「画像上の位置」がずれることがあります。ずれに気づいたら、Agent に「タップ座標と画像の表示領域の関係を説明して」と聞いてみてください。<strong>生成されたコードを説明させる</strong>のも Agent の重要な使い方です。</p>
 </aside>
 <h2 is-upgraded>ステップ3：ドラッグ移動と削除</h2>
