@@ -157,7 +157,7 @@
 <p><strong>Model Providers</strong> を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録して Gemini 3.5 Flash などの追加モデルを使えるほか、サードパーティプロバイダ（OpenAI、Anthropic の Claude など）も API エンドポイントと API キーの登録で追加できます（プロバイダに合わせて URL Schema で OpenAI 互換／Anthropic 互換などを選択します）。ただし<strong>サードパーティモデルではコードや入力データがそのプロバイダに直接送信される</strong>点に注意してください（設定画面にも警告が表示されます）。</p>
 <p class="image-container"><img alt="Model Providers に Google AI Studio の API キーを登録し、使いたいモデルを有効化" src="img/6eebea728f39330e.png"></p>
 <p class="image-container"><img alt="サードパーティプロバイダの追加画面（例：OpenAI）。データ送信の警告が表示される" src="img/2defa50e2c1d0c6e.png"></p>
-<aside class="special"><p><strong>プライバシーについて</strong>：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは <strong><code>.aiexclude</code></strong> ファイル（<code>.gitignore</code> と同じ構文）で除外できます。また、<strong>無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります</strong>（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。</p>
+<aside class="special"><p><strong>プライバシーについて</strong>：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは <code>.aiexclude</code> ファイル（<code>.gitignore</code> と同じ構文）で除外できます。また、<strong>無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります</strong>（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。</p>
 </aside>
 <h2 is-upgraded>AGENTS.md でプロジェクトの掟を決める</h2>
 <p><strong>AGENTS.md</strong> は、すべての指示の前に自動で読み込まれる「プロジェクトの掟」です。ソースコードと一緒にバージョン管理できるため、チームの規約を Agent に守らせる仕組みとして機能します。</p>
@@ -207,7 +207,7 @@
 <ul>
 <li>頼んでいないファイルまで書き換えていないか</li>
 <li>不要な依存関係が <code>build.gradle.kts</code> に追加されていないか</li>
-<li><strong>不要な権限が </strong><strong><code>AndroidManifest.xml</code></strong><strong> に追加されていないか</strong>（後のステップで実例が出ます）</li>
+<li><code>AndroidManifest.xml</code> に<strong>不要な権限が追加されていないか</strong>（後のステップで実例が出ます）</li>
 <li>動くけど古い書き方（deprecated API、非推奨パターン）になっていないか</li>
 </ul>
 <p>デフォルト設定では、Agent がファイルを書き込む<strong>たびに</strong>次のような許可の確認が表示されます（Agent Permissions の「Ask every time」の挙動です）。ただし、毎回 Allow を押していてはテンポが上がりません。バージョン管理でいつでも戻せるようにしてある今回は、最初に表示されたときに <strong>Always allow</strong> を選んでプロジェクト内の書き込みを許可してしまい、<strong>人間のレビューは「実装計画」と「完了後の Changes パネル」に集約する</strong>のがおすすめです。設計と結果の検証に集中し、途中経過は Agent に任せる——これが「加速」の作法です。</p>
@@ -240,11 +240,7 @@
 <p class="image-container"><img alt="Agent が git status を確認し、.gitignore への追加を提案している" style="width: 485.00px" src="img/7b8f138aa52dc1c4.png"></p>
 <p>「はい」で進めると <code>.gitignore</code> を更新し、コミット対象を再確認してくれます。</p>
 <p class="image-container"><img alt=".gitignore を更新し、コミット対象を確認している" style="width: 485.00px" src="img/344e6f0a5e0ad4d7.png"></p>
-<p>シェルコマンドの実行は、ファイル書き込みとは別に都度許可が求められます。<strong>「Add </strong></p>
-<p><strong><code>git add</code></strong></p>
-<p><strong> to allow list」「Add </strong></p>
-<p><strong><code>git commit</code></strong></p>
-<p><strong> to allow list」にチェックを入れて Allow</strong> すれば、この2つのコマンドは以後確認なしで実行されます。</p>
+<p>シェルコマンドの実行は、ファイル書き込みとは別に都度許可が求められます。「Add <code>git add</code> to allow list」「Add <code>git commit</code> to allow list」にチェックを入れて <strong>Allow</strong> すれば、この2つのコマンドは以後確認なしで実行されます。</p>
 <p class="image-container"><img alt="git add と git commit の実行許可。それぞれ allow list に追加するチェックボックス付き" style="width: 450.00px" src="img/149b9f5fe76fbacb.png"></p>
 <aside class="special"><p> ファイル名を指定しなくても、Agent はプロジェクトを調べて<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）にたどり着きます。依存関係が一元管理されているプロジェクトなら、指示はこの一言で済みます。実務でも、構成が整理されているほど Agent への指示は短くなります。</p>
 </aside>
