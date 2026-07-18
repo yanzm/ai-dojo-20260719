@@ -241,7 +241,7 @@
 <h2 is-upgraded>差分レビュー演習</h2>
 <p><strong>Keep All を押す前に</strong>、次のチェックリストで差分をレビューしてください。</p>
 <ul>
-<li><code>AndroidManifest.xml</code> に <code><uses-permission android:name="android.permission.CAMERA" /></code> が<strong>追加されていないか</strong>。<code>ACTION_IMAGE_CAPTURE</code> に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう</li>
+<li><code>AndroidManifest.xml</code> に <code>&lt;uses-permission android:name="android.permission.CAMERA" /&gt;</code> が<strong>追加されていないか</strong>。<code>ACTION_IMAGE_CAPTURE</code> に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう</li>
 <li>FileProvider の <code>authorities</code> が <code>applicationId</code> ベースになっているか</li>
 <li><code>file_paths.xml</code> の保存先が妥当か（<code>cache-path</code> など）</li>
 <li>頼んでいない依存やファイル変更が混ざっていないか</li>

@@ -294,7 +294,7 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 **Keep All を押す前に**、次のチェックリストで差分をレビューしてください。
 
-* `AndroidManifest.xml` に `<uses-permission android:name="android.permission.CAMERA" />` が**追加されていないか**。`ACTION_IMAGE_CAPTURE` に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう
+* `AndroidManifest.xml` に `&lt;uses-permission android:name="android.permission.CAMERA" /&gt;` が**追加されていないか**。`ACTION_IMAGE_CAPTURE` に CAMERA 権限は不要で、むしろ Manifest に宣言すると実行時権限が必須になり複雑化します。追加されていたら「CAMERA 権限は不要なので削除して」と指示しましょう
 * FileProvider の `authorities` が `applicationId` ベースになっているか
 * `file_paths.xml` の保存先が妥当か（`cache-path` など）
 * 頼んでいない依存やファイル変更が混ざっていないか
