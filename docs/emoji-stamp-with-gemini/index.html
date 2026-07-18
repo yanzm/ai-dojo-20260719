@@ -229,8 +229,21 @@
 <p class="image-container"><img alt="書き込み許可のプロンプト。Always allow を選ぶ" style="width: 465.00px" src="img/7c2b2e2aa4a9a980.png"></p>
 <p>この選択は <code>Settings > Tools > AI > Agent Permissions</code> に反映されます。変わるのは <strong>Write source files in the project</strong>（プロジェクト内のソースファイル書き込み）だけで、プロジェクト外へのアクセスや削除などは都度確認のままです。設定はここからいつでも戻せます。</p>
 <p class="image-container"><img alt="Always allow を選ぶと Agent Permissions の Write source files in the project だけが Always allow に変わる" src="img/7e2df28dc0631a7d.png"></p>
-<p>ビルドでの検証まで完了すると、Walkthrough に更新内容と検証結果がまとまり、<strong>Changes</strong> パネルに差分が表示されます。<code>libs.versions.toml</code> の差分を確認して <strong>Keep All</strong> したら、コミットしておきましょう。</p>
+<p>ビルドでの検証まで完了すると、Walkthrough に更新内容と検証結果がまとまり、<strong>Changes</strong> パネルに差分が表示されます。<code>libs.versions.toml</code> の差分を確認して <strong>Keep All</strong> します。</p>
 <p class="image-container"><img alt="完了後の画面。Walkthrough に更新内容と検証結果、Changes パネルの Keep All で確定" src="img/4229a04da09937fa.png"></p>
+<p>最後に、コミットも Agent に頼んでみましょう。</p>
+<pre><code>ここまでの変更をコミットして
+</code></pre>
+<p>Agent は <code>git status</code> で状況を確認してから進めます。今回は、エージェントの作業ログ（<code>.artifacts/</code>）や IDE の設定ファイルを <code>.gitignore</code> に追加する提案までしてくれました（AGENTS.md はリポジトリで管理する想定なのでコミットに含める、という判断も妥当です）。</p>
+<p class="image-container"><img alt="Agent が git status を確認し、.gitignore への追加を提案している" style="width: 485.00px" src="img/7b8f138aa52dc1c4.png"></p>
+<p>「はい」で進めると <code>.gitignore</code> を更新し、コミット対象を再確認してくれます。</p>
+<p class="image-container"><img alt=".gitignore を更新し、コミット対象を確認している" style="width: 485.00px" src="img/344e6f0a5e0ad4d7.png"></p>
+<p>シェルコマンドの実行は、ファイル書き込みとは別に都度許可が求められます。<strong>「Add </strong></p>
+<p><strong><code>git add</code></strong></p>
+<p><strong> to allow list」「Add </strong></p>
+<p><strong><code>git commit</code></strong></p>
+<p><strong> to allow list」にチェックを入れて Allow</strong> すれば、この2つのコマンドは以後確認なしで実行されます。</p>
+<p class="image-container"><img alt="git add と git commit の実行許可。それぞれ allow list に追加するチェックボックス付き" style="width: 450.00px" src="img/149b9f5fe76fbacb.png"></p>
 <aside class="special"><p> ファイル名を指定しなくても、Agent はプロジェクトを調べて<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）にたどり着きます。依存関係が一元管理されているプロジェクトなら、指示はこの一言で済みます。実務でも、構成が整理されているほど Agent への指示は短くなります。</p>
 </aside>
 
@@ -287,9 +300,7 @@
 <p class="image-container"><img alt="「カメラで撮影」ボタンが追加され、撮影した写真が表示された画面" style="width: 400.00px" src="img/3ec7813004c465f6.png"></p>
 <aside class="warning"><p> エミュレータのカメラには擬似的な3D空間が映ります。実機ならより実感が湧きます。</p>
 </aside>
-<p>動いたらコミットしておきましょう。セクション2の手順で手動コミットしてもよいですが、<strong>Agent に「ここまでの変更をコミットして」と頼む</strong>こともできます。Agent は <code>git status</code> で状況を確認してから <code>git add</code> / <code>git commit</code> を実行します。シェルコマンドの実行は都度許可を求められるので、コマンドの内容を確認して <strong>Allow</strong> しましょう（「Add <code>git add</code> to allow list」にチェックを入れると、同じコマンドは以後確認なしで実行されます）。</p>
-<p class="image-container"><img alt="Agent が git add の実行許可を求めている画面。allow list へ追加するチェックボックス付き" style="width: 470.00px" src="img/adebdc7ece94f642.png"></p>
-<p>コミットメッセージも変更内容から生成されます。</p>
+<p>動いたら、ウォームアップと同様に「ここまでの変更をコミットして」と Agent に頼んでコミットしておきましょう。コミットメッセージは変更内容から生成されます（ウォームアップで allow list に追加済みなら、git コマンドは確認なしで実行されます）。</p>
 <p class="image-container"><img alt="Agent が git commit を実行し、コミットメッセージと変更ファイルを報告している" style="width: 490.00px" src="img/4bd63f99def797d8.png"></p>
 
 
