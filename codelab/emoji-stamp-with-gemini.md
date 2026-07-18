@@ -269,9 +269,13 @@ Agent は、いきなりコードを書かずに**実装計画（Implementation 
 
 ![作業完了後の画面。Walkthrough と Changes パネル（Keep All / Revert All）](img/10-changes-keep-revert.png)
 
-実行して、ボタンから写真を選んで表示されれば成功です。
+実行して、ボタンを押すと Photo Picker が開きます。「EmojiStamp will only have access to the photos you select」と表示されているとおり、**アプリに権限を与えずに**選んだ写真だけを渡せるのが Photo Picker の利点です。
 
-![TODO: エミュレータで Photo Picker が開いている画面と、選んだ写真が表示された画面（2枚並べる）](img/11-photo-picker.png)
+<img src="img/11-photo-picker.png" width="400" alt="Photo Picker が開いた画面。選択した写真だけにアクセスできる旨のバナーが表示される" />
+
+写真を選んで表示されれば成功です。
+
+<img src="img/27-photo-picked.png" width="400" alt="選んだ写真がアプリに表示された画面" />
 
 > aside negative
 > エミュレータに写真がない場合は、**エミュレータのカメラアプリで何枚か撮影しておく**か、PC から画像ファイルをエミュレータ画面にドラッグ＆ドロップすると追加できます。
