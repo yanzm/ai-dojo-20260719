@@ -46,7 +46,7 @@ Duration: 5
 > プロジェクトの作成は当日みんなで一緒に行います。
 
 > aside positive
-> Android Studio と Gemini の UI は更新頻度が高いため、この Codelab のスクリーンショットと実際の画面が多少異なる場合があります。適宜読み替えてください。
+> この Codelab は **Android Studio Quail 2** をもとに作成しています。Android Studio と Gemini は更新頻度が高いため、将来のバージョンでは機能や UI が変わっている可能性があります。スクリーンショットや手順が実際の画面と異なる場合は、適宜読み替えてください。
 
 ## プロジェクトを作って環境を確認する
 Duration: 15
