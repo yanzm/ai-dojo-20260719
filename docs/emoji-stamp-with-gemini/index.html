@@ -38,7 +38,7 @@
 </ul>
 <h2 is-upgraded>作るもの</h2>
 <p>ギャラリーから選んだ写真、またはカメラ Intent で撮った写真の上に、絵文字スタンプをペタペタ貼れるアプリです。小さな題材ですが、Photo Picker / カメラ Intent + FileProvider / ジェスチャ処理 / 状態管理と論点が揃っていて、<strong>Agent への指示の良し悪しが結果に直結します</strong>。</p>
-<p class="image-container"><img alt="完成アプリ。写真の上に絵文字スタンプが複数配置されている" style="width: 400.00px" src="img/7731cccc5ce341d7.png"></p>
+<p class="image-container"><img alt="完成アプリ。写真の上に絵文字スタンプが複数配置されている" style="width: 400.00px" src="img/ef6f0556fc01ad36.png"></p>
 <h2 is-upgraded>学べること</h2>
 <ul>
 <li>Agent モードの仕組み（持っているツール、コンテキストの渡り方）</li>
@@ -91,6 +91,7 @@
 <ol type="1">
 <li>Gradle Sync 完了後、▶ Run でエミュレータ（または実機）に「Hello Android」が表示されることを確認</li>
 </ol>
+<p class="image-container"><img alt="ツールバーの ▶ Run ボタンでアプリを実行する。エミュレータは右側の Running Devices ツールウィンドウに表示される" src="img/be7c57584457be24.png"></p>
 <aside class="warning"><p> 執筆時点の Quail 2 では、テンプレートが生成するプロジェクトの <code>compileSdk</code> が 36.1 になっており、同梱ライブラリ（<code>androidx.core:core-ktx:1.19.0</code>）が要求する 37 に足りないため、<strong>そのままではビルドが失敗します</strong>。「Dependency ‘androidx.core:core-ktx:1.19.0&#39; requires ... version 37 or later of the Android APIs」というエラーが出たら、次の手順で直します。</p>
 </aside>
 <p>エラーが出た場合の対処：</p>
@@ -224,7 +225,9 @@
 </code></pre>
 <p class="image-container"><img alt="Agent への依頼：ライブラリを最新の安定版に更新してください" style="width: 460.00px" src="img/e1eb37141c7d8405.png"></p>
 <p>Agent はバージョンカタログ（<code>gradle/libs.versions.toml</code>）を見つけ、<strong>Web で各ライブラリの最新バージョンを調べて</strong>更新計画を提示します。更新対象とバージョン、検証の進め方を確認して「はい」で進めましょう。</p>
-<p class="image-container"><img alt="Agent が提示したライブラリの更新計画。調査結果・変更内容・検証計画が含まれる" src="img/96cbf73b4c552a42.png"></p>
+<p class="image-container"><img alt="Agent が提示したライブラリの更新計画。調査結果・変更内容・検証計画が含まれる" src="img/15e3937b1c779ba3.png"></p>
+<aside class="special"><p> ファイル名を指定しなくても、Agent はプロジェクトを調べて<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）にたどり着きます。依存関係が一元管理されているプロジェクトなら、指示はこの一言で済みます。実務でも、構成が整理されているほど Agent への指示は短くなります。</p>
+</aside>
 <p>ファイル書き込みの許可を求められたら、ここで <strong>Always allow</strong> を選びましょう。以後の書き込み確認がスキップされ、作業が止まらなくなります。</p>
 <p class="image-container"><img alt="書き込み許可のプロンプト。Always allow を選ぶ" style="width: 465.00px" src="img/7c2b2e2aa4a9a980.png"></p>
 <p>この選択は <code>Settings > Tools > AI > Agent Permissions</code> に反映されます。変わるのは <strong>Write source files in the project</strong>（プロジェクト内のソースファイル書き込み）だけで、プロジェクト外へのアクセスや削除などは都度確認のままです。設定はここからいつでも戻せます。</p>
@@ -242,8 +245,8 @@
 <p class="image-container"><img alt=".gitignore を更新し、コミット対象を確認している" style="width: 485.00px" src="img/344e6f0a5e0ad4d7.png"></p>
 <p>シェルコマンドの実行は、ファイル書き込みとは別に都度許可が求められます。「Add <code>git add</code> to allow list」「Add <code>git commit</code> to allow list」にチェックを入れて <strong>Allow</strong> すれば、この2つのコマンドは以後確認なしで実行されます。</p>
 <p class="image-container"><img alt="git add と git commit の実行許可。それぞれ allow list に追加するチェックボックス付き" style="width: 450.00px" src="img/149b9f5fe76fbacb.png"></p>
-<aside class="special"><p> ファイル名を指定しなくても、Agent はプロジェクトを調べて<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）にたどり着きます。依存関係が一元管理されているプロジェクトなら、指示はこの一言で済みます。実務でも、構成が整理されているほど Agent への指示は短くなります。</p>
-</aside>
+<p>allow list に追加したコマンドは、<strong>Settings &gt; Tools &gt; AI &gt; Agent Permissions</strong> の <strong>Always allowed shell commands</strong> に登録されます。あとから一覧を確認したり、不要になったコマンドを削除したりできます。</p>
+<p class="image-container"><img alt="Agent Permissions の Always allowed shell commands に git add と git commit が登録されている" src="img/d05267118c60a2b4.png"></p>
 
 
       </google-codelab-step>
@@ -263,17 +266,22 @@
 - READ_MEDIA_IMAGES などの権限は追加しないこと（Photo Picker には不要）
 </code></pre>
 <p>Agent は、いきなりコードを書かずに<strong>実装計画（Implementation Plan）を提示して確認を求める</strong>ことがあります。計画はエディタにアーティファクトとして開くので、<strong>制約が反映されているか</strong>（Photo Picker を使っているか、stateless composable になっているか、余計な権限を足していないか）をここでレビューしましょう。依存関係を追加する場合は理由が書かれているはずです——AGENTS.md の「追加する場合は理由を説明する」が効いています。</p>
-<p class="image-container"><img alt="Agent が提示した実装計画。制約と AGENTS.md のルールが反映されている" src="img/aa573e189508cda2.png"></p>
-<p>計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進めます（ウォームアップで <strong>Always allow</strong> を選んでいれば、書き込みの確認なしで進みます。差分のレビューは完了後の Changes パネルでまとめて行いましょう）。</p>
-<p class="image-container"><img alt="「はい」と返信すると Task List を作成し、Proposed change と書き込み許可を求めながら進む" style="width: 600.00px" src="img/ae6507a45b8312a2.png"></p>
+<p class="image-container"><img alt="Agent が提示した実装計画。制約と AGENTS.md のルールが反映されている" src="img/2b89d27cc2bc03a.png"></p>
+<p>なお、スクリーンショットに写っている「Model query failed: RESOURCE_EXHAUSTED」の赤いバナーは混雑時によく出るものです。自動でリトライされるので、そのまま待てば問題ありません（詳しくは「うまくいかないときは」参照）。</p>
+<p>計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進めます。ウォームアップで <strong>Always allow</strong> を選んでいても、<code>build.gradle.kts</code> のような<strong>実行可能ファイル（executable files）への書き込みは別の許可</strong>として扱われ、あらためて確認が出ます。ここでも <strong>Always allow</strong> を選んで進めましょう（差分のレビューは完了後の Changes パネルでまとめて行います）。</p>
+<p class="image-container"><img alt="「はい」と返信すると Task List を作成して作業が進む。build.gradle.kts への書き込みでは executable ファイル用の許可があらためて求められるので Always allow を選ぶ" style="width: 600.00px" src="img/6d344e541421c6a8.png"></p>
+<p>この選択も Agent Permissions に反映されます。変わるのは <strong>Write executable files in the project</strong> だけで、ファイル書き込みの許可が「ソースファイル」「実行可能ファイル」など対象ごとに分かれて管理されていることがわかります。</p>
+<p class="image-container"><img alt="Always allow を選ぶと Agent Permissions の Write executable files in the project が Always allow に変わる" src="img/7b616ff38794ac71.png"></p>
 <p>作業が完了すると、<strong>Walkthrough</strong>（実装内容の解説ドキュメント）が作られ、<strong>Changes</strong> パネルに変更されたファイルの一覧が表示されます。ファイル名をクリックして差分をレビューし、問題なければ <strong>Keep All</strong> を選びます（やり直させるなら <strong>Revert All</strong>）。</p>
-<p class="image-container"><img alt="作業完了後の画面。Walkthrough と Changes パネル（Keep All / Revert All）" src="img/509d5d7f686580e2.png"></p>
+<p class="image-container"><img alt="作業完了後の画面。Walkthrough と Changes パネル（Keep All / Revert All）" src="img/e73c5d4230019fda.png"></p>
 <p>実行して、ボタンを押すと Photo Picker が開きます。「EmojiStamp will only have access to the photos you select」と表示されているとおり、<strong>アプリに権限を与えずに</strong>選んだ写真だけを渡せるのが Photo Picker の利点です。</p>
 <p class="image-container"><img alt="Photo Picker が開いた画面。選択した写真だけにアクセスできる旨のバナーが表示される" style="width: 400.00px" src="img/c1b88283169e2055.png"></p>
 <p>写真を選んで表示されれば成功です。</p>
-<p class="image-container"><img alt="選んだ写真がアプリに表示された画面" style="width: 400.00px" src="img/138cd59371e26f63.png"></p>
+<p class="image-container"><img alt="選んだ写真がアプリに表示された画面" style="width: 400.00px" src="img/43d2d42693686536.png"></p>
 <aside class="warning"><p> エミュレータに写真がない場合は、<strong>エミュレータのカメラアプリで何枚か撮影しておく</strong>か、PC から画像ファイルをエミュレータ画面にドラッグ＆ドロップすると追加できます。</p>
 </aside>
+<p>動いたら、ウォームアップと同様に「ここまでの変更をコミットして」と Agent に頼んでコミットしておきましょう。コミットメッセージは変更内容から生成されます（ウォームアップで allow list に追加済みなら、git コマンドは確認なしで実行されます）。</p>
+<p class="image-container"><img alt="Agent が git status、git add、git commit を確認なしで実行し、Photo Picker 実装のコミットメッセージを生成している" style="width: 460.00px" src="img/7d62e8e378b42e74.png"></p>
 <h2 is-upgraded>ステップ2：カメラ Intent（差分レビュー演習つき）</h2>
 <p>次に、カメラアプリを Intent で呼び出して撮影できるようにします。</p>
 <pre><code>「カメラで撮影」ボタンを追加してください。
@@ -295,11 +303,10 @@
 <aside class="special"><p> 制約を先に決めてあったからこそ、差分を「制約に違反していないか」という明確な観点でチェックできます。この<strong>検証できる形で依頼して、検証する</strong>というループは、このハンズオンで一番持ち帰ってほしい習慣です。</p>
 </aside>
 <p>実行して、撮影 → 表示まで確認しましょう。</p>
-<p class="image-container"><img alt="「カメラで撮影」ボタンが追加され、撮影した写真が表示された画面" style="width: 400.00px" src="img/3ec7813004c465f6.png"></p>
+<p class="image-container"><img alt="「カメラで撮影」ボタンが追加され、撮影した写真が表示された画面" style="width: 400.00px" src="img/f754d2bc0d7610f3.png"></p>
 <aside class="warning"><p> エミュレータのカメラには擬似的な3D空間が映ります。実機ならより実感が湧きます。</p>
 </aside>
-<p>動いたら、ウォームアップと同様に「ここまでの変更をコミットして」と Agent に頼んでコミットしておきましょう。コミットメッセージは変更内容から生成されます（ウォームアップで allow list に追加済みなら、git コマンドは確認なしで実行されます）。</p>
-<p class="image-container"><img alt="Agent が git commit を実行し、コミットメッセージと変更ファイルを報告している" style="width: 490.00px" src="img/4bd63f99def797d8.png"></p>
+<p>動いたら、ここでも Agent に頼んでコミットしておきましょう。</p>
 
 
       </google-codelab-step>
@@ -314,7 +321,7 @@
 - 選択中の絵文字は枠線などで強調表示
 - 「選択中の絵文字」の状態は親 composable にホイスティングすること
 </code></pre>
-<p class="image-container"><img alt="画面下部に絵文字パレットが横並びし、選択中の絵文字が枠線で強調されている" style="width: 400.00px" src="img/d648a5cdb8ab2f99.png"></p>
+<p class="image-container"><img alt="画面下部に絵文字パレットが横並びし、選択中の絵文字が枠線で強調されている" style="width: 400.00px" src="img/b11749c5f854f06d.png"></p>
 <h2 is-upgraded>ステップ2：タップでスタンプを配置</h2>
 <p>データ構造まで指定して依頼します。</p>
 <pre><code>写真の上をタップしたら、選択中の絵文字をその位置に配置する機能を実装してください。
@@ -326,7 +333,7 @@
 - タップ位置がスタンプの中心になるように配置
 </code></pre>
 <p>実行して、タップ → スタンプ配置を確認しましょう。🎉 動いたらコミット。</p>
-<p class="image-container"><img alt="写真の上に星とハートのスタンプが複数配置された画面" style="width: 400.00px" src="img/7731cccc5ce341d7.png"></p>
+<p class="image-container"><img alt="写真の上に星とハートのスタンプが複数配置された画面" style="width: 400.00px" src="img/ef6f0556fc01ad36.png"></p>
 <aside class="special"><p><strong>座標系の罠</strong>：<code>ContentScale.Fit</code> で画像を表示していると、レターボックス部分のせいで「見た目のタップ位置」と「画像上の位置」がずれることがあります。ずれに気づいたら、Agent に「タップ座標と画像の表示領域の関係を説明して」と聞いてみてください。<strong>生成されたコードを説明させる</strong>のも Agent の重要な使い方です。</p>
 </aside>
 <h2 is-upgraded>ステップ3：ドラッグ移動と削除</h2>
