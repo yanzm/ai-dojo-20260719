@@ -140,9 +140,9 @@
 <p class="image-container"><img alt="Settings &gt; Tools &gt; AI。左のツリーに各サブページ、右に Enable Pre-Bundled Skills" src="img/80083c582f7eb447.png"></p>
 <p>使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（会話ごとに選択できます）。</p>
 <p class="image-container"><img alt="入力欄右下のモデルピッカー。会話ごとにモデルを選べる（この例は Google AI Studio のモデルを追加した状態。デフォルトでは Gemini の項目のみ表示されます）" src="img/75d5ee755388f30f.png"></p>
-<p><strong>Model Providers</strong> を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録すれば Gemini 3.5 Flash などの追加モデルを、OpenAI 互換 API のエンドポイントを登録すればサードパーティモデルを使えます。ただし<strong>サードパーティモデルではコードや入力データがそのプロバイダに直接送信される</strong>点に注意してください（設定画面にも警告が表示されます）。</p>
+<p><strong>Model Providers</strong> を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録して Gemini 3.5 Flash などの追加モデルを使えるほか、サードパーティプロバイダ（OpenAI、Anthropic の Claude など）も API エンドポイントと API キーの登録で追加できます（プロバイダに合わせて URL Schema で OpenAI 互換／Anthropic 互換などを選択します）。ただし<strong>サードパーティモデルではコードや入力データがそのプロバイダに直接送信される</strong>点に注意してください（設定画面にも警告が表示されます）。</p>
 <p class="image-container"><img alt="Model Providers に Google AI Studio の API キーを登録し、使いたいモデルを有効化" src="img/6eebea728f39330e.png"></p>
-<p class="image-container"><img alt="OpenAI 互換のサードパーティプロバイダの追加画面。データ送信の警告が表示される" src="img/2defa50e2c1d0c6e.png"></p>
+<p class="image-container"><img alt="サードパーティプロバイダの追加画面（例：OpenAI）。データ送信の警告が表示される" src="img/2defa50e2c1d0c6e.png"></p>
 <aside class="special"><p><strong>プライバシーについて</strong>：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは <strong><code>.aiexclude</code></strong> ファイル（<code>.gitignore</code> と同じ構文）で除外できます。また、<strong>無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります</strong>（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。</p>
 </aside>
 <h2 is-upgraded>AGENTS.md でプロジェクトの掟を決める</h2>

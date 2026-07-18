@@ -143,11 +143,11 @@ Gemini の設定は `Settings > Tools > AI` にまとまっています（ステ
 
 ![入力欄右下のモデルピッカー。会話ごとにモデルを選べる（この例は Google AI Studio のモデルを追加した状態。デフォルトでは Gemini の項目のみ表示されます）](img/08-model-picker.png)
 
-**Model Providers** を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録すれば Gemini 3.5 Flash などの追加モデルを、OpenAI 互換 API のエンドポイントを登録すればサードパーティモデルを使えます。ただし**サードパーティモデルではコードや入力データがそのプロバイダに直接送信される**点に注意してください（設定画面にも警告が表示されます）。
+**Model Providers** を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録して Gemini 3.5 Flash などの追加モデルを使えるほか、サードパーティプロバイダ（OpenAI、Anthropic の Claude など）も API エンドポイントと API キーの登録で追加できます（プロバイダに合わせて URL Schema で OpenAI 互換／Anthropic 互換などを選択します）。ただし**サードパーティモデルではコードや入力データがそのプロバイダに直接送信される**点に注意してください（設定画面にも警告が表示されます）。
 
 ![Model Providers に Google AI Studio の API キーを登録し、使いたいモデルを有効化](img/17-model-provider-ai-studio.png)
 
-![OpenAI 互換のサードパーティプロバイダの追加画面。データ送信の警告が表示される](img/18-model-provider-openai.png)
+![サードパーティプロバイダの追加画面（例：OpenAI）。データ送信の警告が表示される](img/18-model-provider-openai.png)
 
 > aside positive
 > **プライバシーについて**：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは **`.aiexclude`** ファイル（`.gitignore` と同じ構文）で除外できます。また、**無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります**（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。
