@@ -137,6 +137,8 @@ Gemini の設定は `Settings > Tools > AI` にまとまっています（ステ
 * **Prompt Library**：**Rules**（すべての指示に自動適用される指示。Scope を IDE / Project で切替）と **Saved Prompts**（`@prompt` で呼び出す定型プロンプト）を管理します
 * **Skills**：`Tools > AI` 直下の **Enable Pre-Bundled Skills** で、同梱の Android スキル（後述）を有効にできます（デフォルトで有効）
 
+![Settings > Tools > AI。左のツリーに各サブページ、右に Enable Pre-Bundled Skills](img/07-ai-settings.png)
+
 使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（例：Gemini 3 Flash Preview）。
 
 > aside positive
