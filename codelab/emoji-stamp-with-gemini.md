@@ -139,6 +139,10 @@ Gemini の設定は `Settings > Tools > AI` にまとまっています（ステ
 
 ![Settings > Tools > AI。左のツリーに各サブページ、右に Enable Pre-Bundled Skills](img/07-ai-settings.png)
 
+デフォルト設定では、Agent がファイルを書き込もうとすると次のような確認が表示されます。**Allow**（今回だけ許可）と **Always allow**（以後は確認なし）を使い分けましょう。
+
+<img src="img/24-write-permission.png" width="530" alt="Agent のファイル書き込み許可プロンプト。Allow / Cancel and do not allow / Always allow" />
+
 使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（会話ごとに選択できます）。
 
 <img src="img/08-model-picker.png" width="580" alt="入力欄右下のモデルピッカー。会話ごとにモデルを選べる（この例は Google AI Studio のモデルを追加した状態。デフォルトでは Gemini の項目のみ表示されます）" />
