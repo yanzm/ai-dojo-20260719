@@ -227,6 +227,8 @@
 <p class="image-container"><img alt="Agent が提示したライブラリの更新計画。調査結果・変更内容・検証計画が含まれる" src="img/96cbf73b4c552a42.png"></p>
 <p>ファイル書き込みの許可を求められたら、ここで <strong>Always allow</strong> を選びましょう。以後の書き込み確認がスキップされ、作業が止まらなくなります。</p>
 <p class="image-container"><img alt="書き込み許可のプロンプト。Always allow を選ぶ" style="width: 465.00px" src="img/7c2b2e2aa4a9a980.png"></p>
+<p>この選択は <code>Settings > Tools > AI > Agent Permissions</code> に反映されます。変わるのは <strong>Write source files in the project</strong>（プロジェクト内のソースファイル書き込み）だけで、プロジェクト外へのアクセスや削除などは都度確認のままです。設定はここからいつでも戻せます。</p>
+<p class="image-container"><img alt="Always allow を選ぶと Agent Permissions の Write source files in the project だけが Always allow に変わる" src="img/7e2df28dc0631a7d.png"></p>
 <p>ビルドでの検証まで完了すると、Walkthrough に更新内容と検証結果がまとまり、<strong>Changes</strong> パネルに差分が表示されます。<code>libs.versions.toml</code> の差分を確認して <strong>Keep All</strong> したら、コミットしておきましょう。</p>
 <p class="image-container"><img alt="完了後の画面。Walkthrough に更新内容と検証結果、Changes パネルの Keep All で確定" src="img/4229a04da09937fa.png"></p>
 <aside class="special"><p> ファイル名を指定しなくても、Agent はプロジェクトを調べて<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）にたどり着きます。依存関係が一元管理されているプロジェクトなら、指示はこの一言で済みます。実務でも、構成が整理されているほど Agent への指示は短くなります。</p>
