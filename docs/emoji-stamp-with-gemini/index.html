@@ -176,11 +176,11 @@
 <h2 is-upgraded>Android Skills — オンデマンドの専門知識</h2>
 <p>AGENTS.md が「常に効く掟」なら、<strong>スキル</strong>は「必要なときだけ読み込まれる専門知識」です。<a href="https://agentskills.io/" target="_blank">エージェントスキルのオープン標準</a>に基づく Markdown ベースの仕組みで、Google が Android 開発のベストプラクティス集を <a href="https://github.com/android/skills" target="_blank">android/skills</a> リポジトリで公式提供しています。</p>
 <p><strong>Google 公式の Android スキルは最初から同梱されています。</strong><code>Settings > Tools > AI</code> の <strong>Enable Pre-Bundled Skills</strong> が有効（デフォルト）なら、新しいエージェントセッションで自動的に使われます。エッジツーエッジ対応、adaptive UI、テスト整備、ライブラリ移行などのベストプラクティスが含まれます。</p>
-<p>同梱以外のスキルを追加したい場合：</p>
+<p>同梱されているのは、<a href="https://github.com/android/skills" target="_blank">github.com/android/skills</a> で公開されている Android スキル群です。リポジトリ側は随時更新されるので、最新版や自作のスキルを使いたい場合は手動でも追加できます：</p>
 <ol type="1">
-<li><a href="https://github.com/android/skills" target="_blank">github.com/android/skills</a> などからスキルをダウンロード</li>
+<li>スキル（<code>SKILL.md</code> を含むフォルダ）を用意する</li>
 <li>プロジェクトルート（またはホームディレクトリ）の <code>.agents/skills/</code> に配置</li>
-<li>あとは Agent が<strong>プロンプトの内容に応じて自動で選択・使用</strong>します。<code>@skill-name タスク内容</code> の形式で明示的に呼び出すこともできます</li>
+<li>あとは Agent が<strong>プロンプトの内容に応じて自動で選択・使用</strong>します。入力欄で <code>@</code> を入力するとスキル一覧が表示され、<code>@skill-name タスク内容</code> の形式で明示的に呼び出すこともできます</li>
 </ol>
 <p class="image-container"><img alt="TODO: チャット入力欄で @skill-name を入力してスキルを呼び出している画面" src="img/d334dd7bec1bdff0.png"></p>
 <h2 is-upgraded>差分レビューの観点</h2>

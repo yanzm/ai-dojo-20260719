@@ -201,11 +201,11 @@ AGENTS.md が「常に効く掟」なら、**スキル**は「必要なときだ
 
 **Google 公式の Android スキルは最初から同梱されています。**`Settings > Tools > AI` の **Enable Pre-Bundled Skills** が有効（デフォルト）なら、新しいエージェントセッションで自動的に使われます。エッジツーエッジ対応、adaptive UI、テスト整備、ライブラリ移行などのベストプラクティスが含まれます。
 
-同梱以外のスキルを追加したい場合：
+同梱されているのは、[github.com/android/skills](https://github.com/android/skills) で公開されている Android スキル群です。リポジトリ側は随時更新されるので、最新版や自作のスキルを使いたい場合は手動でも追加できます：
 
-1. [github.com/android/skills](https://github.com/android/skills) などからスキルをダウンロード
+1. スキル（`SKILL.md` を含むフォルダ）を用意する
 2. プロジェクトルート（またはホームディレクトリ）の `.agents/skills/` に配置
-3. あとは Agent が**プロンプトの内容に応じて自動で選択・使用**します。`@skill-name タスク内容` の形式で明示的に呼び出すこともできます
+3. あとは Agent が**プロンプトの内容に応じて自動で選択・使用**します。入力欄で `@` を入力するとスキル一覧が表示され、`@skill-name タスク内容` の形式で明示的に呼び出すこともできます
 
 ![TODO: チャット入力欄で @skill-name を入力してスキルを呼び出している画面](img/16-skills-invoke.png)
 
