@@ -204,7 +204,19 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="写真を取得する（Photo Picker とカメラ Intent）" duration="30">
+      <google-codelab-step label="ウォームアップ：ライブラリを更新する" duration="10">
+        <p>機能実装に入る前に、小さく完結したタスクで Agent との開発サイクルを一周してみましょう。テンプレートから生成したプロジェクトは依存ライブラリのバージョンが最新でないことがあるので、これを Agent に更新してもらいます。</p>
+<pre><code>gradle/libs.versions.toml で管理しているライブラリを最新の安定版に更新してください。
+更新後、ビルドが通ることを確認してください。
+</code></pre>
+<p>Agent は各ライブラリの最新バージョンを調べて計画を提示します。更新対象とバージョンを確認して進めましょう。ファイル書き込みの許可（<strong>Always allow</strong> を選ぶチャンスです）のあと、ビルドでの検証まで Agent が行い、完了すると <strong>Changes</strong> パネルに差分が表示されます。<code>libs.versions.toml</code> の差分を確認して <strong>Keep All</strong> したら、コミットしておきましょう。</p>
+<aside class="special"><p> このプロジェクトは依存関係を<strong>バージョンカタログ</strong>（<code>gradle/libs.versions.toml</code>）で一元管理しているので、「このファイルを最新に」という短い指示で全ライブラリの更新が完結します。実務でも、プロジェクトの構成が整理されているほど Agent への指示は短くて済みます。</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="写真を取得する（Photo Picker とカメラ Intent）" duration="25">
         <p>最初の機能実装です。ここでの主題は「<strong>制約付きプロンプト</strong>で実装方式を制御する」ことです。</p>
 <aside class="special"><p> 「写真を選べるようにして」というゆるい指示でも動くものは出ます。しかし実装方式（Photo Picker か <code>ACTION_GET_CONTENT</code> か）、ライブラリ選定、状態の持ち方が毎回変わり、レビューも難しくなります。<strong>設計判断は人間が持ち、実装を Agent に任せる</strong>のが基本姿勢です。</p>
 </aside>
