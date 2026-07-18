@@ -139,7 +139,15 @@ Gemini の設定は `Settings > Tools > AI` にまとまっています（ステ
 
 ![Settings > Tools > AI。左のツリーに各サブページ、右に Enable Pre-Bundled Skills](img/07-ai-settings.png)
 
-使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（例：Gemini 3 Flash Preview）。
+使用モデルは Agent パネルの入力欄右下のピッカーで切り替えます（会話ごとに選択できます）。
+
+![入力欄右下のモデルピッカー。会話ごとにモデルを選べる](img/08-model-picker.png)
+
+**Model Providers** を使うと、選べるモデルを増やせます。Google AI Studio の API キーを登録すれば Gemini 3.5 Flash などの追加モデルを、OpenAI 互換 API のエンドポイントを登録すればサードパーティモデルを使えます。ただし**サードパーティモデルではコードや入力データがそのプロバイダに直接送信される**点に注意してください（設定画面にも警告が表示されます）。
+
+![Model Providers に Google AI Studio の API キーを登録し、使いたいモデルを有効化](img/17-model-provider-ai-studio.png)
+
+![OpenAI 互換のサードパーティプロバイダの追加画面。データ送信の警告が表示される](img/18-model-provider-openai.png)
 
 > aside positive
 > **プライバシーについて**：以前あった「プロジェクトのコンテキストを共有するか」の設定は廃止され、Agent はプロジェクトのソースファイルを読み取って動作します（初回にその旨の確認が表示されます）。読ませたくない機密ファイルは **`.aiexclude`** ファイル（`.gitignore` と同じ構文）で除外できます。また、**無料枠では会話やコードが Google AI の改善のためにレビュー・使用されることがあります**（入力欄上部の Privacy Notice 参照。有償プランでは使われません）。業務コードで使う際は、組織のポリシーに合わせてプランを選んでください。
