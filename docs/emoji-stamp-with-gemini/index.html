@@ -217,7 +217,11 @@
 - UI は stateless な composable に切り出し、状態は呼び出し側でホイスティングすること
 - READ_MEDIA_IMAGES などの権限は追加しないこと（Photo Picker には不要）
 </code></pre>
-<p>差分を確認して Accept し、実行。ボタンから写真を選んで表示されれば成功です。</p>
+<p>Agent は、いきなりコードを書かずに<strong>実装計画（Implementation Plan）を提示して確認を求める</strong>ことがあります。計画はエディタにアーティファクトとして開くので、<strong>制約が反映されているか</strong>（Photo Picker を使っているか、stateless composable になっているか、余計な権限を足していないか）をここでレビューしましょう。依存関係を追加する場合は理由が書かれているはずです——AGENTS.md の「追加する場合は理由を説明する」が効いています。</p>
+<p class="image-container"><img alt="Agent が提示した実装計画。制約と AGENTS.md のルールが反映されている" src="img/aa573e189508cda2.png"></p>
+<p>計画に問題がなければ「はい」と返信します。Agent は Task List を作って作業を進め、ファイルを書き換える前に <strong>Proposed change</strong>（差分）と書き込み許可を求めてきます。差分を確認して <strong>Allow</strong> で進めましょう。</p>
+<p class="image-container"><img alt="「はい」と返信すると Task List を作成し、Proposed change と書き込み許可を求めながら進む" style="width: 600.00px" src="img/ae6507a45b8312a2.png"></p>
+<p>完了したら実行して、ボタンから写真を選んで表示されれば成功です。</p>
 <p class="image-container"><img alt="TODO: エミュレータで Photo Picker が開いている画面と、選んだ写真が表示された画面（2枚並べる）" src="img/e0ad41fc145c436c.png"></p>
 <aside class="warning"><p> エミュレータに写真がない場合は、PC から画像ファイルをエミュレータ画面にドラッグ＆ドロップすると追加できます。</p>
 </aside>
