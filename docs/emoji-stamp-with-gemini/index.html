@@ -180,9 +180,14 @@
 <ol type="1">
 <li>スキル（<code>SKILL.md</code> を含むフォルダ）を用意する</li>
 <li>プロジェクトルート（またはホームディレクトリ）の <code>.agents/skills/</code> に配置</li>
-<li>あとは Agent が<strong>プロンプトの内容に応じて自動で選択・使用</strong>します。入力欄で <code>@</code> を入力するとスキル一覧が表示され、<code>@skill-name タスク内容</code> の形式で明示的に呼び出すこともできます</li>
+<li>あとは Agent が<strong>プロンプトの内容に応じて自動で選択・使用</strong>します</li>
 </ol>
-<p class="image-container"><img alt="TODO: チャット入力欄で @skill-name を入力してスキルを呼び出している画面" src="img/d334dd7bec1bdff0.png"></p>
+<p>実際に、入力欄で <code>@</code> を入力してみましょう。利用できるスキルの一覧が表示されます（Saved Prompts やファイル添付の候補もここに出ます）。</p>
+<p class="image-container"><img alt="入力欄で @ を入力すると、スキルと Saved Prompts、ファイルの候補が表示される" src="img/45d13057b4a98b3f.png"></p>
+<p>一覧からスキルを選ぶと、チップとして入力欄に入ります。</p>
+<p class="image-container"><img alt="選択したスキルはチップとして入力欄に入る" src="img/6b7b9ec4e5b6e86c.png"></p>
+<p>例えば <code>edge-to-edge</code> スキルを付けてエッジツーエッジ対応を依頼すると、Agent がまずスキルを読み込み（Activate Skill）、その手順に沿って作業を進めます。実行までは、後の自由演習で試してみてください。</p>
+<p class="image-container"><img alt="Agent が edge-to-edge スキルを読み込んで（Activate Skill / Read skill）作業を進める様子" src="img/7ba04dcfaef583d7.png"></p>
 <h2 is-upgraded>差分レビューの観点</h2>
 <p>Agent は変更を差分で提案し、あなたが <strong>Accept / Reject</strong> を判断します。中級者のあなたはコードが読めるので、<strong>PR レビューと同じ目</strong>で見てください。特に注意すべきは：</p>
 <ul>
